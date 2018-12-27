@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="前言由于第一次搭建服务器不解析php文件，解决不了，打算推到再来，把安装过程的坑度记录下来 安装准备建立Sudo权限用户建立普通用户1234adduser username命令adduser 用户的名称passwd username设置用户密码">
+<meta name="description" content="前言由于第一次搭建服务器不解析php文件，解决不了，打算推到再来，把安装过程的坑度记录下来">
 <meta name="keywords" content="CentOS LNMP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CentOS.6 搭建 LNMP 教程">
 <meta property="og:url" content="https:blog.guozhenlei.top/CentOS-6-搭建-LNMP-教程/index.html">
 <meta property="og:site_name" content="磊大大的个人博客">
-<meta property="og:description" content="前言由于第一次搭建服务器不解析php文件，解决不了，打算推到再来，把安装过程的坑度记录下来 安装准备建立Sudo权限用户建立普通用户1234adduser username命令adduser 用户的名称passwd username设置用户密码">
+<meta property="og:description" content="前言由于第一次搭建服务器不解析php文件，解决不了，打算推到再来，把安装过程的坑度记录下来">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https:/image/centos.png">
-<meta property="og:updated_time" content="2018-03-23T13:12:12.000Z">
+<meta property="og:updated_time" content="2018-12-27T05:01:31.621Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS.6 搭建 LNMP 教程">
-<meta name="twitter:description" content="前言由于第一次搭建服务器不解析php文件，解决不了，打算推到再来，把安装过程的坑度记录下来 安装准备建立Sudo权限用户建立普通用户1234adduser username命令adduser 用户的名称passwd username设置用户密码">
+<meta name="twitter:description" content="前言由于第一次搭建服务器不解析php文件，解决不了，打算推到再来，把安装过程的坑度记录下来">
 <meta name="twitter:image" content="https:/image/centos.png">
 
 
@@ -361,9 +361,8 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>由于第一次搭建服务器不解析php文件，解决不了，打算推到再来，把安装过程的坑度记录下来</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>由于第一次搭建服务器不解析php文件，解决不了，打算推到再来，把安装过程的坑度记录下来<br><a id="more"></a></p>
 <h2 id="安装准备"><a href="#安装准备" class="headerlink" title="安装准备"></a>安装准备</h2><h3 id="建立Sudo权限用户"><a href="#建立Sudo权限用户" class="headerlink" title="建立Sudo权限用户"></a>建立Sudo权限用户</h3><h4 id="建立普通用户"><a href="#建立普通用户" class="headerlink" title="建立普通用户"></a>建立普通用户</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">adduser username</span><br><span class="line">命令adduser 用户的名称</span><br><span class="line">passwd username</span><br><span class="line">设置用户密码</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
 <h4 id="赋予普通账户Sudo权限"><a href="#赋予普通账户Sudo权限" class="headerlink" title="赋予普通账户Sudo权限"></a>赋予普通账户Sudo权限</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">进入 etc/sudoers.d/ 新建一个文件，文件名随意，添加 username ALL=(ALL:ALL) ALL 即可</span><br><span class="line">详解 ： 1. cd /etc/sudoers.d/</span><br><span class="line">       2. touch 文件名称</span><br><span class="line">       3. vim 文件名称 </span><br><span class="line">       4. 赋予用户sudo权限的用户名称 + ALL=(ALL:ALL) ALL</span><br></pre></td></tr></table></figure>
 <h4 id="切换用户"><a href="#切换用户" class="headerlink" title="切换用户"></a>切换用户</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su 用户名称</span><br></pre></td></tr></table></figure>
 <h3 id="查看系统版本"><a href="#查看系统版本" class="headerlink" title="查看系统版本"></a>查看系统版本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/redhat-release</span><br></pre></td></tr></table></figure>
