@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/dog.jpeg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-dog.jpeg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-dog.jpeg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MySql,InnoDb,MyiSam,数据库引擎" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言一个网站总是离不开数据库的，今天，我们就谈谈数据库的优化，以MySql为例 优化方式数据库优化一般分为三种：">
+<meta name="keywords" content="MySql,InnoDb,MyiSam,数据库引擎">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySql优化三部曲之存储层优化">
+<meta property="og:url" content="https:blog.guozhenlei.top/MySql优化三部曲之存储层优化/index.html">
+<meta property="og:site_name" content="磊大大的个人博客">
+<meta property="og:description" content="前言一个网站总是离不开数据库的，今天，我们就谈谈数据库的优化，以MySql为例 优化方式数据库优化一般分为三种：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https:/img/createTable.jpeg">
+<meta property="og:image" content="https:/img/shuju.jpeg">
+<meta property="og:image" content="https:/img/variables.jpeg">
+<meta property="og:image" content="https:/img/variables2.jpeg">
+<meta property="og:image" content="https:/img/WechatIMG4.jpeg">
+<meta property="og:image" content="https:/img/WechatIMG5.jpeg">
+<meta property="og:image" content="https:/img/WechatIMG6.jpeg">
+<meta property="og:image" content="https:/img/WechatIMG7.jpeg">
+<meta property="og:image" content="https:/img/WechatIMG11.jpeg">
+<meta property="og:image" content="https:/img/WechatIMG8.jpeg">
+<meta property="og:image" content="https:/img/WechatIMG12.jpeg">
+<meta property="og:image" content="https:/img/WechatIMG13.jpeg">
+<meta property="og:image" content="https:/img/WechatIMG14.jpeg">
+<meta property="og:image" content="https:/img/WechatIMG15.jpeg">
+<meta property="og:image" content="https:/img/WechatIMG16.jpeg">
+<meta property="og:image" content="https:/img/WechatIMG18.jpeg">
+<meta property="og:image" content="https:/img/WechatIMG17.jpeg">
+<meta property="og:image" content="https:/img/WechatIMG19.jpeg">
+<meta property="og:updated_time" content="2018-07-17T09:18:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySql优化三部曲之存储层优化">
+<meta name="twitter:description" content="前言一个网站总是离不开数据库的，今天，我们就谈谈数据库的优化，以MySql为例 优化方式数据库优化一般分为三种：">
+<meta name="twitter:image" content="https:/img/createTable.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Gzl'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https:blog.guozhenlei.top/MySql优化三部曲之存储层优化/"/>
+
+
+
+
+
+  <title>MySql优化三部曲之存储层优化 | 磊大大的个人博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d06a86df5420e1956c374ce450f28878";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">磊大大的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习笔记</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/home/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https:blog.guozhenlei.top/MySql优化三部曲之存储层优化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gzl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/dog.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="磊大大的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySql优化三部曲之存储层优化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-09T19:52:11+08:00">
+                2018-07-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySql/" itemprop="url" rel="index">
+                    <span itemprop="name">MySql</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/MySql优化三部曲之存储层优化/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="MySql优化三部曲之存储层优化/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一个网站总是离不开数据库的，今天，我们就谈谈数据库的优化，以<code>MySql</code>为例</p>
+<h2 id="优化方式"><a href="#优化方式" class="headerlink" title="优化方式"></a>优化方式</h2><p>数据库优化一般分为三种：<br><a id="more"></a></p>
+<p>1.存储层：数据表 “存储引擎” 选取<br>2.设计层：逆范式(3范式)、索引、分区/分表、存储过程，<code>sql</code>语句的优化<br>3.架构层：分布式部署(集群)(读写分离)，需要增加硬件</p>
+<h2 id="存储层"><a href="#存储层" class="headerlink" title="存储层"></a>存储层</h2><h2 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h2><p><code>linux</code>存储表的默认地址：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/var/lib/mysql</span><br></pre></td></tr></table></figure></p>
+<p><code>什么是存储引擎?</code><br>存储引擎就是数据表存储数据的一种格式，因为<code>MySql</code>的数据是通过各种不同的技术存储在文件（或者内存）中的，这种技术和本身的特征就成为<code>存储引擎</code>。<br><code>有哪些存储引擎</code><br>熟悉的存储引擎有：<code>MyiSam</code> <code>InnoDb</code> <code>Merge</code></p>
+<p>具体各引擎间的优缺点请参考 <a href="https://www.jianshu.com/p/a957b18ba40d" target="_blank" rel="noopener">MySQL存储引擎</a></p>
+<h3 id="InnoDb存储引擎"><a href="#InnoDb存储引擎" class="headerlink" title="InnoDb存储引擎"></a><code>InnoDb</code>存储引擎</h3><p><code>MySql &gt;= 5.5</code>版本中默认的存储引擎，<code>MySql</code>推荐使用的存储引擎。提供事务，行级锁定，外键约束的存储引擎。<br>事务安全型存储引擎，更加注重数据的完整性和安全性。 </p>
+<h4 id="存储格式"><a href="#存储格式" class="headerlink" title="存储格式"></a>存储格式</h4><p><code>innodb</code>存储引擎<br>每个数据表有单独的“结构文件” <code>*.frm</code> 数据，索引集中存储，存储于同一个表空间文件中ibdata1。<br><code>ti的表结构文件</code><br><img src="/img/createTable.jpeg" alt=""></p>
+<p><code>innodb</code>表空间文件：存储<code>innodb</code>的数据和索引。<br><img src="/img/shuju.jpeg" alt=""></p>
+<p>默认，所有的<code>innodb</code>表的数据和索引在同一个表空间文件中，通过配置可以达到每个<code>innodb</code>的表对应一个表空间文件</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'innodb_file_per_table%'</span></span><br></pre></td></tr></table></figure>
+<p><img src="/img/variables.jpeg" alt=""></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">开启该配置 : </span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> innodb_file_per_table=<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p><img src="/img/variables2.jpeg" alt=""></p>
+<p>注：因为之前已经开启过了，所以在此直接上图<br><img src="/img/WechatIMG4.jpeg" alt=""></p>
+<p>注意 : <code>innodb</code>数据表不能直接进行文件的复制/粘贴进行备份还原, 可以使用如下指令 :<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysqldump  -uroot -p密码  数据库名字 &gt; f:/文件名称.sql  [备份]</span><br><span class="line">mysql -uroot  -p密码 数据库   &lt;  f:/文件名称.sql  [还原]</span><br></pre></td></tr></table></figure></p>
+<h4 id="数据是按照主键顺序存储的"><a href="#数据是按照主键顺序存储的" class="headerlink" title="数据是按照主键顺序存储的"></a>数据是按照主键顺序存储的</h4><p>该<code>Innodb</code>数据表，数据的写入顺序 与 存储的顺序不一致，需要按照主键的顺序把记录摆放到对应的位置上去，速度比<code>Myisam</code>的要稍慢。<br><img src="/img/WechatIMG5.jpeg" alt=""></p>
+<h4 id="并发处理"><a href="#并发处理" class="headerlink" title="并发处理"></a>并发处理</h4><p><code>擅长处理并发：</code><br>行级锁定(<code>row-level locking</code>)，实现了行级锁定，在一定情况下，可以选择行级锁来提升并发性，也支持表级锁定，<code>innodb</code>根据操作选择。<br>多版本并发控制，<code>MVCC</code>，效果达到无阻塞读操作  </p>
+<p><code>锁机制：</code><br>当客户端操作表（记录）时，为了保证操作的隔离性（多个客户端操作不能相互影响），通过加锁来处理。<br><code>操作方面：</code><br>读锁：读操作时增加的锁，也叫共享锁，<code>S-lock</code>。特征是所有人都只可以读，只有释放锁之后才可以写。<br>写锁：写操作时增加的锁，也叫独占锁或排他锁，<code>X-lock</code>。特征，只有锁表的客户可以操作（读写）这个表，其他客户读都不能读。<br>锁定粒度（范围）<br>表级锁：开销小，加锁快，发生锁冲突的概率最高，并发度最低。<code>myisam</code>和<code>innodb</code>都支持。<br>行级锁：开销大，加锁慢，发生锁冲突的概率最低，并发度也最高。<code>innodb</code>支持</p>
+<h3 id="MyiSam存储引擎"><a href="#MyiSam存储引擎" class="headerlink" title="MyiSam存储引擎"></a><code>MyiSam</code>存储引擎</h3><p><code>MySql &lt;=5.5</code>时默认的存储引擎。<br>（<code>ISAM</code>——索引顺序访问方法）是<code>Indexed Sequential Access Method</code>(索引顺序存取方法)的缩写<br>它是一种索引机制，用于高效访问文件中的数据行，擅长与处理高速读与写。</p>
+<h4 id="存储方式"><a href="#存储方式" class="headerlink" title="存储方式"></a>存储方式</h4><p><code>MyiSam</code>存储引擎数据表，每个数据表都有三个文件<code>*.frm *.MYD  *.MYI</code><br>数据，索引，结构分别存储于不同的文件中,这三个文件支持物理复制、粘贴操作(直接备份还原)。<br><img src="/img/WechatIMG6.jpeg" alt=""></p>
+<h4 id="数据是按照插入顺序存储的"><a href="#数据是按照插入顺序存储的" class="headerlink" title="数据是按照插入顺序存储的"></a>数据是按照插入顺序存储的</h4><p><img src="/img/WechatIMG7.jpeg" alt=""></p>
+<h4 id="并发性"><a href="#并发性" class="headerlink" title="并发性"></a>并发性</h4><p><code>MyiSam</code>的并发性较比<code>Innodb</code>要稍逊色，因为数据表是“表锁”</p>
+<h4 id="压缩性"><a href="#压缩性" class="headerlink" title="压缩性"></a>压缩性</h4><p><code>压缩</code><br>如果一个<code>MyiSam</code>数据表存储的数据非常多，就会占据很大的硬盘空间，为了节省空间，可以把这个<code>MyiSam</code>数据表给进行压缩处理<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">首先自我复制，填充数据</span><br><span class="line"> insert into table_name  select * from table_name; #复制自己</span><br></pre></td></tr></table></figure></p>
+<p>压缩前的大小<br><img src="/img/WechatIMG11.jpeg" alt=""><br><img src="/img/WechatIMG8.jpeg" alt=""></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin     //压缩工具的默认路径</span><br><span class="line"></span><br><span class="line">myisampack 需要压缩的表的文件</span><br></pre></td></tr></table></figure>
+<p>把数据表给flush刷新一次，使得硬盘数据与内存数据同步。<br>flush  table 表名称<br><img src="/img/WechatIMG12.jpeg" alt=""><br><img src="/img/WechatIMG13.jpeg" alt=""></p>
+<p><code>重建索引</code><br>压缩后的数据表需要根据最新的数据位置把索引重新建立一次。根据压缩后的数据把索引重建建立起来<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myisamchk -rq 需要压缩的表的文件</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/WechatIMG14.jpeg" alt=""></p>
+<p><code>只读特性</code><br>压缩的数据表不能再写入数据了，必须解压后才可以<br><img src="/img/WechatIMG15.jpeg" alt=""></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myisamchk.exe  <span class="comment">--unpack  需要压缩的表的文件</span></span><br></pre></td></tr></table></figure>
+<p><img src="/img/WechatIMG16.jpeg" alt=""></p>
+<p>刷新数据表，并查看文件的大小<br><img src="/img/WechatIMG18.jpeg" alt=""><br><img src="/img/WechatIMG17.jpeg" alt=""></p>
+<p>解压后，又可以插入新的数据<br><img src="/img/WechatIMG19.jpeg" alt=""></p>
+<p>怎么样取舍请注意。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySql/" rel="tag"># MySql</a>
+          
+            <a href="/tags/InnoDb/" rel="tag"># InnoDb</a>
+          
+            <a href="/tags/MyiSam/" rel="tag"># MyiSam</a>
+          
+            <a href="/tags/数据库引擎/" rel="tag"># 数据库引擎</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/下拉框多选/" rel="next" title="下拉框多选">
+                <i class="fa fa-chevron-left"></i> 下拉框多选
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/MySql优化三部曲之设计层优化(上)/" rel="prev" title="MySql优化三部曲之设计层优化(上)">
+                MySql优化三部曲之设计层优化(上) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/img/dog.jpeg"
+                alt="Gzl" />
+            
+              <p class="site-author-name" itemprop="name">Gzl</p>
+              <p class="site-description motion-element" itemprop="description">个人日常技术记录博客</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化方式"><span class="nav-number">2.</span> <span class="nav-text">优化方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储层"><span class="nav-number">3.</span> <span class="nav-text">存储层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储引擎"><span class="nav-number">4.</span> <span class="nav-text">存储引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDb存储引擎"><span class="nav-number">4.1.</span> <span class="nav-text">InnoDb存储引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#存储格式"><span class="nav-number">4.1.1.</span> <span class="nav-text">存储格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据是按照主键顺序存储的"><span class="nav-number">4.1.2.</span> <span class="nav-text">数据是按照主键顺序存储的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#并发处理"><span class="nav-number">4.1.3.</span> <span class="nav-text">并发处理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyiSam存储引擎"><span class="nav-number">4.2.</span> <span class="nav-text">MyiSam存储引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#存储方式"><span class="nav-number">4.2.1.</span> <span class="nav-text">存储方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据是按照插入顺序存储的"><span class="nav-number">4.2.2.</span> <span class="nav-text">数据是按照插入顺序存储的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#并发性"><span class="nav-number">4.2.3.</span> <span class="nav-text">并发性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#压缩性"><span class="nav-number">4.2.4.</span> <span class="nav-text">压缩性</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gzl</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://disqus_k0AAUxAZIe.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https:blog.guozhenlei.top/MySql优化三部曲之存储层优化/';
+          this.page.identifier = 'MySql优化三部曲之存储层优化/';
+          this.page.title = 'MySql优化三部曲之存储层优化';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://disqus_k0AAUxAZIe.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

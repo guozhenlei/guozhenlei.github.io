@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/dog.jpeg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-dog.jpeg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-dog.jpeg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Redis,PHP-Redis" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="虽然以前也装过Redis但是时间久了，有些东西记得不清楚了，还的问Google什么的，所以为了下次方便，从而写下这篇博客。">
+<meta name="keywords" content="Redis,PHP-Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安装Redis以及PHP-Redis扩展教程">
+<meta property="og:url" content="https:blog.guozhenlei.top/安装Redis以及PHP-Redis扩展教程/index.html">
+<meta property="og:site_name" content="磊大大的个人博客">
+<meta property="og:description" content="虽然以前也装过Redis但是时间久了，有些东西记得不清楚了，还的问Google什么的，所以为了下次方便，从而写下这篇博客。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https:/img/WechatIMG85.jpeg">
+<meta property="og:image" content="https:/img/WechatIMG86.jpeg">
+<meta property="og:image" content="https:/img/WechatIMG87.jpeg">
+<meta property="og:updated_time" content="2018-07-18T08:13:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="安装Redis以及PHP-Redis扩展教程">
+<meta name="twitter:description" content="虽然以前也装过Redis但是时间久了，有些东西记得不清楚了，还的问Google什么的，所以为了下次方便，从而写下这篇博客。">
+<meta name="twitter:image" content="https:/img/WechatIMG85.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Gzl'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https:blog.guozhenlei.top/安装Redis以及PHP-Redis扩展教程/"/>
+
+
+
+
+
+  <title>安装Redis以及PHP-Redis扩展教程 | 磊大大的个人博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d06a86df5420e1956c374ce450f28878";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">磊大大的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习笔记</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/home/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https:blog.guozhenlei.top/安装Redis以及PHP-Redis扩展教程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gzl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/dog.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="磊大大的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">安装Redis以及PHP-Redis扩展教程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-18T22:35:33+08:00">
+                2018-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/安装Redis以及PHP-Redis扩展教程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="安装Redis以及PHP-Redis扩展教程/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>虽然以前也装过<code>Redis</code>但是时间久了，有些东西记得不清楚了，还的问<code>Google</code>什么的，所以为了下次方便，从而写下这篇博客。</p>
+<a id="more"></a>
+<h2 id="安装Redis"><a href="#安装Redis" class="headerlink" title="安装Redis"></a>安装<code>Redis</code></h2><p>安装<code>Redis</code>采用<code>tar</code>安装。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wget http://download.redis.io/releases/redis-4.0.10.tar.gz //下载redis源</span><br><span class="line"></span><br><span class="line">tar xzf redis-4.0.10.tar.gz  //解压</span><br><span class="line"> </span><br><span class="line">cd redis-4.0.10</span><br><span class="line"></span><br><span class="line">make PREFIX=/usr/local/redis install  //初始化安装 安装的路径为 /usr/local/redis</span><br></pre></td></tr></table></figure></p>
+<p>安装好,进入<code>Redis</code>的<code>bin</code>目录如下：<br><img src="/img/WechatIMG85.jpeg" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">redis-benchmark命令性能测试命令</span><br><span class="line">redis-check-aof和redis-check-dump是日志检测工具</span><br><span class="line">redis-server是服务器端启动的命令。</span><br><span class="line">redis-cli是客户端连接服务器的命令。</span><br></pre></td></tr></table></figure></p>
+<h2 id="配置Redis"><a href="#配置Redis" class="headerlink" title="配置Redis"></a>配置<code>Redis</code></h2><p>复制解压包里面的<code>redis.conf</code>文件到你安装<code>redis</code>的目录中(<code>我的：/use/local/redis</code>)</p>
+<p>进入<code>redis.conf</code>文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">把 daemonize no 改为 daemonize yes</span><br></pre></td></tr></table></figure></p>
+<h2 id="启动Redis"><a href="#启动Redis" class="headerlink" title="启动Redis"></a>启动<code>Redis</code></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">首先启动Redis服务器</span><br><span class="line">/usr/local/redis/bin/redis-server /usr/local/redis/redis.conf</span><br></pre></td></tr></table></figure>
+<p>因为我的配置文件在<code>/etc/redis.conf</code>中，So<br><img src="/img/WechatIMG86.jpeg" alt=""></p>
+<p>查看是否启动成功：启动成功后，默认的端口是<code>6379</code><br><code>netstat –tunpl | grep 6379</code></p>
+<h2 id="设置快捷启动redis-server"><a href="#设置快捷启动redis-server" class="headerlink" title="设置快捷启动redis-server"></a>设置快捷启动<code>redis-server</code></h2><p>复制<code>tar</code>包下<code>utils</code>中的<code>redis_init_script</code>文件<br>复制到<code>/etc/init.d/</code>下 重命名为 <code>redisd</code></p>
+<p>进入<code>redisd</code>中，设置以下参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#大致浏览下该启动脚本，发现redis习惯性用监听的端口名作为配置文件等命名，我们后面也遵循这个约定。  </span><br><span class="line">#redis服务器监听的端口  </span><br><span class="line">REDISPORT=6379  </span><br><span class="line">#服务端所处位置，在make install后默认存放与`/usr/local/bin/redis-server`，如果未make install则需要修改该路径，下同。  </span><br><span class="line">EXEC=/usr/local/redis/bin/redis-server  </span><br><span class="line">#客户端位置  </span><br><span class="line">CLIEXEC=/usr/local/redis/bin/redis-cli  </span><br><span class="line">#Redis的PID文件位置  </span><br><span class="line">PIDFILE=/var/run/redis_$&#123;REDISPORT&#125;.pid  </span><br><span class="line">#配置文件位置，需要修改  </span><br><span class="line">CONF=/etc/redis.conf</span><br></pre></td></tr></table></figure></p>
+<p>保存退出，在init.d下运行以下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#设置为开机自启动服务器  </span><br><span class="line">chkconfig redisd on </span><br><span class="line"></span><br><span class="line">#打开服务  </span><br><span class="line">service redisd start  </span><br><span class="line"></span><br><span class="line">#关闭服务  </span><br><span class="line">service redisd stop</span><br></pre></td></tr></table></figure>
+<p>如果设置开机启动服务器时报错为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service redisd does not support chkconfig</span><br></pre></td></tr></table></figure></p>
+<p>在启动脚本开头添加如下两行注释以修改其运行级别：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh  </span><br><span class="line"># chkconfig:   2345 90 10  </span><br><span class="line"># description:  Redis is a persistent key-value database</span><br></pre></td></tr></table></figure></p>
+<h2 id="客户端链接Redis服务"><a href="#客户端链接Redis服务" class="headerlink" title="客户端链接Redis服务"></a>客户端链接<code>Redis</code>服务</h2><p>语法： <code>连接命令   -h  主机ip  -p端口号</code><br>如果是连接到本地，则直接输入连接命令即可。<br><code>redis-cli</code>是客户端连接服务器的命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/redis/bin/redis-cli</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/WechatIMG87.jpeg" alt=""></p>
+<h2 id="关闭Redis"><a href="#关闭Redis" class="headerlink" title="关闭Redis"></a>关闭<code>Redis</code></h2><p>强行终止<code>redis</code>进程可能会导致<code>redis持久化数据丢失。正确停止</code>Redis<code>的方式应该是向</code>Redis<code>发送</code>SHUTDOWN`命令  </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">有好几种关闭命令，如下：</span><br><span class="line">/usr/local/redis/bin/redis-cli  shutdown （推荐使用这种）</span><br><span class="line">pkill /usr/local/redis/bin/redis-server （这是强制终止）</span><br></pre></td></tr></table></figure>
+<h2 id="使用密码保护Redis"><a href="#使用密码保护Redis" class="headerlink" title="使用密码保护Redis"></a>使用密码保护<code>Redis</code></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; CONFIG SET requirepass secret_password   # 将密码设置为 secret_password</span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">redis&gt; QUIT                                     # 退出再连接，让新密码对客户端生效</span><br><span class="line"></span><br><span class="line">[huangz@mypad]$ /usr/local/redis/bin/redis-cli</span><br><span class="line"></span><br><span class="line">redis&gt; PING                                     # 未验证密码，操作被拒绝</span><br><span class="line">(error) ERR operation not permitted</span><br><span class="line"></span><br><span class="line">redis&gt; AUTH wrong_password_testing              # 尝试输入错误的密码</span><br><span class="line">(error) ERR invalid password</span><br><span class="line"></span><br><span class="line">redis&gt; AUTH secret_password                     # 输入正确的密码</span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">redis&gt; PING                                     # 密码验证成功，可以正常操作命令了</span><br><span class="line">PONG</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 清空密码</span><br><span class="line"></span><br><span class="line">redis&gt; CONFIG SET requirepass &quot;&quot;   # 通过将密码设为空字符来清空密码</span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">redis&gt; QUIT</span><br><span class="line"></span><br><span class="line">$ /usr/local/redis/bin/redis-cli                  # 重新进入客户端</span><br><span class="line"></span><br><span class="line">redis&gt; PING                        # 执行命令不再需要密码，清空密码操作成功</span><br><span class="line">PONG</span><br></pre></td></tr></table></figure>
+<h2 id="安装PHP-Redis扩展"><a href="#安装PHP-Redis扩展" class="headerlink" title="安装PHP-Redis扩展"></a>安装<code>PHP-Redis</code>扩展</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/phpredis/phpredis.git</span><br><span class="line"></span><br><span class="line">cd phpredis</span><br><span class="line"></span><br><span class="line">phpize</span><br><span class="line"></span><br><span class="line">./configure </span><br><span class="line"></span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<h2 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h2><p>安装php-redis时。如果报错如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@iZm5e3vdh76h8tgskwom5cZ phpredis-3.1.4]# phpize</span><br><span class="line">Can&apos;t find PHP headers in /usr/include/php</span><br><span class="line">The php-devel package is required for use of this command.</span><br></pre></td></tr></table></figure></p>
+<p>解决办法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">安装 php-devel  以及 php-pear 扩展</span><br><span class="line"></span><br><span class="line">例如  你的php版本为5.6</span><br><span class="line">运行命令 yum install  php56-devel php56-pear</span><br><span class="line"></span><br><span class="line">即可解决</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Redis/" rel="tag"># Redis</a>
+          
+            <a href="/tags/PHP-Redis/" rel="tag"># PHP-Redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/SSH配置公钥登陆服务器/" rel="next" title="SSH配置公钥登陆服务器">
+                <i class="fa fa-chevron-left"></i> SSH配置公钥登陆服务器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Git服务器搭建以及代码自动部署教程/" rel="prev" title="Git服务器搭建以及代码自动部署教程">
+                Git服务器搭建以及代码自动部署教程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/img/dog.jpeg"
+                alt="Gzl" />
+            
+              <p class="site-author-name" itemprop="name">Gzl</p>
+              <p class="site-description motion-element" itemprop="description">个人日常技术记录博客</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Redis"><span class="nav-number">1.</span> <span class="nav-text">安装Redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Redis"><span class="nav-number">2.</span> <span class="nav-text">配置Redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动Redis"><span class="nav-number">3.</span> <span class="nav-text">启动Redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置快捷启动redis-server"><span class="nav-number">4.</span> <span class="nav-text">设置快捷启动redis-server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端链接Redis服务"><span class="nav-number">5.</span> <span class="nav-text">客户端链接Redis服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭Redis"><span class="nav-number">6.</span> <span class="nav-text">关闭Redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用密码保护Redis"><span class="nav-number">7.</span> <span class="nav-text">使用密码保护Redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装PHP-Redis扩展"><span class="nav-number">8.</span> <span class="nav-text">安装PHP-Redis扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#报错"><span class="nav-number">9.</span> <span class="nav-text">报错</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gzl</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://disqus_k0AAUxAZIe.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https:blog.guozhenlei.top/安装Redis以及PHP-Redis扩展教程/';
+          this.page.identifier = '安装Redis以及PHP-Redis扩展教程/';
+          this.page.title = '安装Redis以及PHP-Redis扩展教程';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://disqus_k0AAUxAZIe.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

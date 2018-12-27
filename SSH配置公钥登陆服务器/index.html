@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/dog.jpeg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-dog.jpeg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-dog.jpeg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="SSH,密钥" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近又新买了一台服务器，以前的那台一直使用单一公钥登陆的方式，现在有两台了，不适用了，所以就来搞一下多台服务器公钥登陆。(我也是有多台服务器的人了^_^)。不过在说多台公钥登陆服务器之前，还是先说一下单台服务器怎么配置的吧，反正都差不多。">
+<meta name="keywords" content="SSH,密钥">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSH配置公钥登陆服务器">
+<meta property="og:url" content="https:blog.guozhenlei.top/SSH配置公钥登陆服务器/index.html">
+<meta property="og:site_name" content="磊大大的个人博客">
+<meta property="og:description" content="最近又新买了一台服务器，以前的那台一直使用单一公钥登陆的方式，现在有两台了，不适用了，所以就来搞一下多台服务器公钥登陆。(我也是有多台服务器的人了^_^)。不过在说多台公钥登陆服务器之前，还是先说一下单台服务器怎么配置的吧，反正都差不多。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-18T01:41:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SSH配置公钥登陆服务器">
+<meta name="twitter:description" content="最近又新买了一台服务器，以前的那台一直使用单一公钥登陆的方式，现在有两台了，不适用了，所以就来搞一下多台服务器公钥登陆。(我也是有多台服务器的人了^_^)。不过在说多台公钥登陆服务器之前，还是先说一下单台服务器怎么配置的吧，反正都差不多。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Gzl'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https:blog.guozhenlei.top/SSH配置公钥登陆服务器/"/>
+
+
+
+
+
+  <title>SSH配置公钥登陆服务器 | 磊大大的个人博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d06a86df5420e1956c374ce450f28878";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">磊大大的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习笔记</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/home/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https:blog.guozhenlei.top/SSH配置公钥登陆服务器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gzl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/dog.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="磊大大的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SSH配置公钥登陆服务器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-18T01:13:40+08:00">
+                2018-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SSH/" itemprop="url" rel="index">
+                    <span itemprop="name">SSH</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/SSH配置公钥登陆服务器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="SSH配置公钥登陆服务器/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近又新买了一台服务器，以前的那台一直使用单一公钥登陆的方式，现在有两台了，不适用了，所以就来搞一下多台服务器公钥登陆。(我也是有多台服务器的人了^_^)。<br>不过在说多台公钥登陆服务器之前，还是先说一下单台服务器怎么配置的吧，反正都差不多。</p>
+<a id="more"></a>
+<h2 id="单台主机SSH公钥登陆"><a href="#单台主机SSH公钥登陆" class="headerlink" title="单台主机SSH公钥登陆"></a>单台主机<code>SSH</code>公钥登陆</h2><p>配置单个主机的<code>SSH</code>公钥登录，步骤非常简单，三步即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.生成密钥对</span><br><span class="line">2.拷贝公钥文件到服务器</span><br><span class="line">3.SSH 直接公钥登录服务器</span><br></pre></td></tr></table></figure></p>
+<h3 id="生成密钥对"><a href="#生成密钥对" class="headerlink" title="生成密钥对"></a>生成密钥对</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen 命令可以按照指定的参数生成密钥对，其常用的参数有以下几个：</span><br><span class="line"></span><br><span class="line">-t ： 加密算法，可选 [dsa | ecdsa | ed25519 | rsa]；</span><br><span class="line">-b ：密钥长度（256/512/1024/2048……）,建议至少1024；</span><br><span class="line">-f ： 输出的密钥对文件名；</span><br><span class="line">-N ：密钥口令。</span><br></pre></td></tr></table></figure>
+<p>例：比如我要为<code>ceshi</code>主机生成一对密钥文件，密钥长度<code>1024</code>、加密算法<code>ecdsa</code>，就可以用以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -f ceshi -t ecdsa -b 1024</span><br><span class="line"></span><br><span class="line">注：一般默认就行  ssh-keygen -f ceshi （这样就行了）</span><br></pre></td></tr></table></figure></p>
+<h3 id="拷贝公钥到服务器-并生成authorized-keys文件"><a href="#拷贝公钥到服务器-并生成authorized-keys文件" class="headerlink" title="拷贝公钥到服务器 并生成authorized_keys文件"></a>拷贝公钥到服务器 并生成<code>authorized_keys</code>文件</h3><p><code>ssh-copyid</code>命令负责把上述步骤生成的公钥文件内容拷贝到服务器，确切说，是把<code>xxx.pub</code>文件中的内容附加到服务器端的<code>~/.ssh/authorized_keys</code>文件中。</p>
+<p><code>ssh-copyid</code>命令使用方式如下：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-copyid [-i &lt;identityfile&gt;] [-p &lt;port&gt;] [username@]hostname</span><br></pre></td></tr></table></figure></p>
+<p>其中<code>-i</code>即指定上述步骤生成的密钥对中的 公钥文件，意思是把公钥文件<code>xxx.pub</code>传到服务端<code>hostname</code>，<br>把<code>xxx.pub</code>中的内容附加到<code>hostname:/home/username/.ssh/authorized_keys</code>文件中。如果不用<code>-i</code>指定公钥文件，则默认指定<code>id_ras.pub</code>。</p>
+<p>举例来说，我想通过公钥登录我<code>192.168.1.1</code>上的<code>root</code>账户，那么只需把上述步骤中生成的<code>ceshi.pub</code>文件上传到该服务器即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-copyid -i ceshi root@192.168.1.1</span><br></pre></td></tr></table></figure>
+<p>运行这条命令会让输入一次账户密码，然后才能成功上传到服务端。</p>
+<p>另外还有一种办法，就是使用<code>scp</code>命令把公钥上传到服务器，再使用<code>cat xxx.pub &gt;&gt; ~/.ssh/authorized_keys</code>也行。</p>
+<h3 id="直接登陆服务器"><a href="#直接登陆服务器" class="headerlink" title="直接登陆服务器"></a>直接登陆服务器</h3><p>经过上面两步骤，没什么意外的话就可以用密钥登录远程服务器了。</p>
+<p>如果，你生成密钥的时候使用的是默认的名称，则登陆的时候直接如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ssh root@host</span><br><span class="line"></span><br><span class="line">否则</span><br><span class="line"></span><br><span class="line">ssh -i ceshi root@192.168.1.1 -p 端口号</span><br></pre></td></tr></table></figure></p>
+<h2 id="多台主机SSH公钥登陆"><a href="#多台主机SSH公钥登陆" class="headerlink" title="多台主机SSH公钥登陆"></a>多台主机<code>SSH</code>公钥登陆</h2><p>这里有个便捷的方式，三步即可完成配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.为每台服务器生成密钥，并将私钥保存在本地(就是你的电脑)（最好所有的私钥文件统一放到同一目录下，比如 ~/.ssh/AllPriKeys/）</span><br><span class="line"></span><br><span class="line">2.为每台服务器的公钥附加到 hostname:/home/username/.ssh/authorized_keys 文件中；(如单台主机配置)</span><br><span class="line"></span><br><span class="line">2.编写本地 SSH 配置文件： ~/.ssh/config</span><br></pre></td></tr></table></figure></p>
+<h3 id="配置本地的config文件"><a href="#配置本地的config文件" class="headerlink" title="配置本地的config文件"></a>配置本地的<code>config</code>文件</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Host ceshi                            <span class="comment">#别名</span></span><br><span class="line">Hostname <span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span>                  <span class="comment">#服务器地址</span></span><br><span class="line">Port <span class="number">22</span>                               <span class="comment">#服务器 SSH 服务端口</span></span><br><span class="line">User root                             <span class="comment">#服务端的用户名</span></span><br><span class="line">IdentityFile ~/.ssh/priKeys/ceshi     <span class="comment">#对应服务器密钥存储在本地的私钥文件路径</span></span><br><span class="line"></span><br><span class="line">Host ceshi2</span><br><span class="line">Hostname <span class="number">192.168</span><span class="number">.1</span><span class="number">.2</span></span><br><span class="line">Port <span class="number">22</span></span><br><span class="line">User root</span><br><span class="line">IdentityFile ~/.ssh/priKeys/ceshi</span><br></pre></td></tr></table></figure>
+<p>各配置项的意义见上面的注释内容，这样一来，我就可以用 主机别名 直接登录远程服务器了。比如通过<code>SSH</code>公钥登录<a href="mailto:`root@192.168.1.1" target="_blank" rel="noopener">`root@192.168.1.1</a>` ，以下命令即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh ceshi</span><br></pre></td></tr></table></figure></p>
+<h2 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h2><p>严格按照上述步骤操作，也无法成功连接服务端。此处常见的坑有 2 个：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">服务端 ~/.ssh/ 目录和 ~/.ssh/authorized_keys 文件的权限问题；</span><br><span class="line">服务端 ~/.ssh/authorized_keys 文件内容格式问题。</span><br></pre></td></tr></table></figure></p>
+<h3 id="服务端相关目录和文件权限"><a href="#服务端相关目录和文件权限" class="headerlink" title="服务端相关目录和文件权限"></a>服务端相关目录和文件权限</h3><p>把服务端 ~/.ssh/ 目录权限设置为 700 ，把 ~/.ssh/authorized_keys 文件权限设置为 600 即可。</p>
+<h3 id="authorized-keys中pubkey内容要换行"><a href="#authorized-keys中pubkey内容要换行" class="headerlink" title="authorized_keys中pubkey内容要换行"></a><code>authorized_keys</code>中<code>pubkey</code>内容要换行</h3><p>有时候，服务端<code>SSH</code>目录和文件权限都没问题，仍然连接失败。此时给<code>SSH</code>命令启用<code>-v</code>选项打出连接时的详细信息，会发现客户机已经把私钥发送到服务器端，但在服务器端没有验证成功。</p>
+<p>并且，在服务端的<code>SSH</code>服务日志<code>/var/log/secure</code>文件中可以查到类似以下内容的错误信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error: key_read: uudecode AAAAB3N failed</span><br></pre></td></tr></table></figure></p>
+<p>此时就是服务端<code>~/.ssh/authorized_keys</code>文件内容格式出了问题。根源在于<code>ssh-copid</code>命令默认把公钥文件内容直接附加到服务端<code>authorized_keys</code>末尾，而没有换行。</p>
+<p>解决方案也很简单：<code>Vim</code>打开服务端<code>~/.ssh/authorized_keys</code>文件，为每个<code>pubkey</code>内容手动隔开一行即可。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SSH/" rel="tag"># SSH</a>
+          
+            <a href="/tags/密钥/" rel="tag"># 密钥</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/MySql优化三部曲之设计层优化(下)/" rel="next" title="MySql优化三部曲之设计层优化(下)">
+                <i class="fa fa-chevron-left"></i> MySql优化三部曲之设计层优化(下)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/安装Redis以及PHP-Redis扩展教程/" rel="prev" title="安装Redis以及PHP-Redis扩展教程">
+                安装Redis以及PHP-Redis扩展教程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/img/dog.jpeg"
+                alt="Gzl" />
+            
+              <p class="site-author-name" itemprop="name">Gzl</p>
+              <p class="site-description motion-element" itemprop="description">个人日常技术记录博客</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单台主机SSH公钥登陆"><span class="nav-number">1.</span> <span class="nav-text">单台主机SSH公钥登陆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成密钥对"><span class="nav-number">1.1.</span> <span class="nav-text">生成密钥对</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拷贝公钥到服务器-并生成authorized-keys文件"><span class="nav-number">1.2.</span> <span class="nav-text">拷贝公钥到服务器 并生成authorized_keys文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直接登陆服务器"><span class="nav-number">1.3.</span> <span class="nav-text">直接登陆服务器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多台主机SSH公钥登陆"><span class="nav-number">2.</span> <span class="nav-text">多台主机SSH公钥登陆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置本地的config文件"><span class="nav-number">2.1.</span> <span class="nav-text">配置本地的config文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误"><span class="nav-number">3.</span> <span class="nav-text">错误</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端相关目录和文件权限"><span class="nav-number">3.1.</span> <span class="nav-text">服务端相关目录和文件权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#authorized-keys中pubkey内容要换行"><span class="nav-number">3.2.</span> <span class="nav-text">authorized_keys中pubkey内容要换行</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gzl</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://disqus_k0AAUxAZIe.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https:blog.guozhenlei.top/SSH配置公钥登陆服务器/';
+          this.page.identifier = 'SSH配置公钥登陆服务器/';
+          this.page.title = 'SSH配置公钥登陆服务器';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://disqus_k0AAUxAZIe.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
