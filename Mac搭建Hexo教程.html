@@ -326,7 +326,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-23T21:24:29Z">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-24T05:24:29+08:00">
                 2018-03-23
               </time>
             
@@ -404,9 +404,9 @@
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>由于工作的原因，不得不换电脑，想想还是重新搭建再搭建一次Hexo吧！</p>
 <h2 id="搭建前的准备"><a href="#搭建前的准备" class="headerlink" title="搭建前的准备"></a>搭建前的准备</h2><p>Mac + Node.js + Git + GitHub账号</p>
 <a id="more"></a>
-<p>下载地址：<a href="https://nodejs.org/en/download/" target="_blank" rel="external nofollow noopener noreferrer">Node.js</a><br>下载地址：<a href="https://git-scm.com/downloads" target="_blank" rel="external nofollow noopener noreferrer">Git</a><br>注册地址：<a href="https://github.com" target="_blank" rel="external nofollow noopener noreferrer">GitHub</a></p>
+<p>下载地址：<a href="https://nodejs.org/en/download/" rel="external nofollow noopener noreferrer" target="_blank">Node.js</a><br>下载地址：<a href="https://git-scm.com/downloads" rel="external nofollow noopener noreferrer" target="_blank">Git</a><br>注册地址：<a href="https://github.com" rel="external nofollow noopener noreferrer" target="_blank">GitHub</a></p>
 <h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><h3 id="1-Node-js"><a href="#1-Node-js" class="headerlink" title="1.Node.js"></a>1.Node.js</h3><p>直接下载安装即可</p>
-<h3 id="2-Git"><a href="#2-Git" class="headerlink" title="2.Git"></a>2.Git</h3><p>直接下载安装即可，也可以使用Mac中Xcode自带的Git，如果没有，可以参考<a href="https://hexo.io/docs/" target="_blank" rel="external nofollow noopener noreferrer">Hexo官网</a></p>
+<h3 id="2-Git"><a href="#2-Git" class="headerlink" title="2.Git"></a>2.Git</h3><p>直接下载安装即可，也可以使用Mac中Xcode自带的Git，如果没有，可以参考<a href="https://hexo.io/docs/" rel="external nofollow noopener noreferrer" target="_blank">Hexo官网</a></p>
 <h3 id="3-GitHub账号"><a href="#3-GitHub账号" class="headerlink" title="3.GitHub账号"></a>3.GitHub账号</h3><p>自行注册</p>
 <h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><h3 id="1-安装Hexo"><a href="#1-安装Hexo" class="headerlink" title="1.安装Hexo"></a>1.安装Hexo</h3><p>当安装好上述环境就可以准备安装Hexo了。<br>进入终端执行命令。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install         <span class="comment">#更新npm</span></span><br><span class="line">sudo npm install -g hexo</span><br></pre></td></tr></table></figure>
@@ -416,7 +416,7 @@
 <p>此时，打开浏览器输入 localhost:4000,就能看到下面的页面<br><img src="/img/localhost.png" alt="">  </p>
 <p>下面就开始关联Git仓库</p>
 <h2 id="部署Hexo"><a href="#部署Hexo" class="headerlink" title="部署Hexo"></a>部署Hexo</h2><h3 id="1-添加SSH-Key到GitHub"><a href="#1-添加SSH-Key到GitHub" class="headerlink" title="1.添加SSH Key到GitHub"></a>1.添加SSH Key到GitHub</h3><h4 id="1-1检查SSH-Key是否存在GitHub"><a href="#1-1检查SSH-Key是否存在GitHub" class="headerlink" title="1.1检查SSH Key是否存在GitHub"></a>1.1检查SSH Key是否存在GitHub</h4><p>执行如下命令，检查<code>SSH keys</code>是否存在。如果有文件<code>id_rsa.pub</code>或<code>id_dsa.pub</code>，则直接进入步骤1.3将SSH key添加到Github中，否则进入下一步生成SSH key。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -al ~/.ssh</span><br></pre></td></tr></table></figure></p>
-<h4 id="1-2生成新的SSH-Key"><a href="#1-2生成新的SSH-Key" class="headerlink" title="1.2生成新的SSH Key"></a>1.2生成新的SSH Key</h4><p>执行如下命令生成<code>SSH Key</code>，注意将 <a href="mailto:`your_email@example.com" target="_blank" rel="external nofollow noopener noreferrer">`your_email@example.com</a><code>换成你自己注册</code>Github` 的邮箱地址。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;your_email@example.com&quot;</span><br></pre></td></tr></table></figure></p>
+<h4 id="1-2生成新的SSH-Key"><a href="#1-2生成新的SSH-Key" class="headerlink" title="1.2生成新的SSH Key"></a>1.2生成新的SSH Key</h4><p>执行如下命令生成<code>SSH Key</code>，注意将 <a href="mailto:`your_email@example.com" rel="external nofollow noopener noreferrer" target="_blank">`your_email@example.com</a><code>换成你自己注册</code>Github` 的邮箱地址。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;your_email@example.com&quot;</span><br></pre></td></tr></table></figure></p>
 <p>再次执行命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">s -al ~/.ssh  </span><br><span class="line"></span><br><span class="line">则看到两个文件  </span><br><span class="line"></span><br><span class="line">id_rsa</span><br><span class="line">id_rsa.pub</span><br></pre></td></tr></table></figure></p>
 <h4 id="1-3将SSH-Key添加到GitHub中"><a href="#1-3将SSH-Key添加到GitHub中" class="headerlink" title="1.3将SSH Key添加到GitHub中"></a>1.3将SSH Key添加到GitHub中</h4><p>打开<code>id_rsa.pub</code>文件，里面的信息即为<code>SSH key</code>，将这些信息复制到<code>Github</code>的<code>Add SSH key</code>页面即可。<br>进入<code>Github –&gt; Settings –&gt; SSH keys –&gt; add SSH key</code>:<br><code>Title</code>里任意添一个标题，将复制的内容粘贴到<code>Key</code>里，点击下方<code>Add key</code>绿色按钮即可。</p>
 <h3 id="2-创建仓库"><a href="#2-创建仓库" class="headerlink" title="2.创建仓库"></a>2.创建仓库</h3><p>登录账号，点击 <code>New repository</code>创建新的仓库。<br>注：仓库名固定格式 <code>用户名.github.io</code><br>如：<code>guozhenlei.github.io</code><br><img src="/img/new_repository.jpg" alt=""><br><img src="/img/repository_edit.png" alt=""><br><img src="/img/仓库.jpg" alt="">  </p>
@@ -425,7 +425,7 @@
 <p>你只需要将 <code>repository</code> 换成上图的连接就可以了，Hexo 3.1.1版本后type:值为git。</p>
 <p><code>注意事项：</code>  </p>
 <p>在配置所有的_config.yml文件时（包括theme中的），在所有的冒号:后边都要加一个空格，否则执行hexo命令会报错。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">type: git 正确用法</span><br><span class="line">type:git 错误用法</span><br></pre></td></tr></table></figure></p>
-<h3 id="4-设置Hexo"><a href="#4-设置Hexo" class="headerlink" title="4.设置Hexo"></a>4.设置Hexo</h3><p>您可以在 <code>_config.yml</code> 中修改大部份的配置。<br>你可以参考<a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="external nofollow noopener noreferrer">Hexo|配置</a></p>
+<h3 id="4-设置Hexo"><a href="#4-设置Hexo" class="headerlink" title="4.设置Hexo"></a>4.设置Hexo</h3><p>您可以在 <code>_config.yml</code> 中修改大部份的配置。<br>你可以参考<a href="https://hexo.io/zh-cn/docs/configuration.html" rel="external nofollow noopener noreferrer" target="_blank">Hexo|配置</a></p>
 <h3 id="5-发布到公网"><a href="#5-发布到公网" class="headerlink" title="5.发布到公网"></a>5.发布到公网</h3><p>在<code>blog</code>文件下执行命令<code>生成静态页面</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate  或者 hexo g</span><br></pre></td></tr></table></figure></p>
 <h4 id="5-1错误一"><a href="#5-1错误一" class="headerlink" title="5.1错误一"></a>5.1错误一</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">此时若出现如下报错：</span><br><span class="line">ERROR Local hexo not found in ~/blog</span><br><span class="line">ERROR Try runing: &apos;npm install hexo --save&apos;</span><br><span class="line"></span><br><span class="line">则执行命令：</span><br><span class="line">npm install hexo --save</span><br><span class="line"></span><br><span class="line">若无报错，自行忽略此步骤。</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在执行将文章部署到`Git`上的命令</span><br></pre></td></tr></table></figure>
@@ -447,7 +447,7 @@
 <p>记录值：<code>guozhenlei.github.io.</code> (不要忘记最后的<code>.</code>，<code>guozhenlei</code>改为你自己的用户名)，点击保存即可，如下图：</p>
 <p><img src="/img/yuming.jpg" alt=""></p>
 <p>访问 <code>guozhenlei.com</code>跟访问<code>https://guozhenlei.github.io</code>效果一样！</p>
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>至此，<code>Mac</code>基于<code>GitHub</code>的<code>Hexo</code>博客已经完毕，如果想更换主题请参考<a href="https://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external nofollow noopener noreferrer">Next 使用文档</a>！</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>至此，<code>Mac</code>基于<code>GitHub</code>的<code>Hexo</code>博客已经完毕，如果想更换主题请参考<a href="https://theme-next.iissnan.com/getting-started.html" rel="external nofollow noopener noreferrer" target="_blank">Next 使用文档</a>！</p>
 
       
     </div>
