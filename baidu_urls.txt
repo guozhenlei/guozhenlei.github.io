@@ -8,3 +8,9 @@ https:blog.guozhenlei.top/下拉框多选/
 https:blog.guozhenlei.top/无极限分类/
 https:blog.guozhenlei.top/搬瓦工一键搭建Shadowsocks/
 https:blog.guozhenlei.top/搬瓦工搭建Shadowsocks/
+https:blog.guozhenlei.top/LNMP环境搭建/
+https:blog.guozhenlei.top/PHP导出数据生成格式文件/
+https:blog.guozhenlei.top/Hexo-Seo优化/
+https:blog.guozhenlei.top/Mac搭建Hexo教程/
+https:blog.guozhenlei.top/CentOS-6-搭建-LNMP-教程/
+https:blog.guozhenlei.top/Win-10-搭建-Hexo/
