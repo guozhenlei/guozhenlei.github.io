@@ -199,13 +199,13 @@
         <title>MySql优化三部曲之设计层优化(上)</title>
         <pubTime>2018-07-10T15:32:18.000Z</pubTime>
         
-        <tag>SQL优化</tag>
-         
-        <tag>索引</tag>
-         
         <tag>分区</tag>
          
         <tag>分表</tag>
+         
+        <tag>SQL优化</tag>
+         
+        <tag>索引</tag>
          
         <tag>三范式</tag>
          
