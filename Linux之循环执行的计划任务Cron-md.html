@@ -69,7 +69,7 @@
 
 
 
-  <meta name="keywords" content="搬瓦工,Shadowsocks">
+  <meta name="keywords" content="Linux,命令">
 
 
 
@@ -80,24 +80,18 @@
 
 
 
-<meta name="description" content="前言　　以前一直想买个Vps，在搬瓦工上面$19.9的一直缺货，所有一直在用一个老哥的，这次老哥续费时发现有货了，果断入手！想自己动手安装的右转：搬瓦工安装Shadowsocks">
-<meta name="keywords" content="搬瓦工,Shadowsocks">
+<meta name="description" content="前言学习笔记-Linux基础教程 用户的设置 /etc/cron.allow将使用Crontab的账号写入其中，不在这个文件内的用户则不可使用Crontab   /etc/cron.deny将不可使用Ctontab的账号写入其中，不在这个文件内的用户则可以使用Crontab    说明/etc/cron.allow 比 /etc/cron.deny 的优先级要高，只选择一个限制即可，系统默认保留/">
+<meta name="keywords" content="Linux,命令">
 <meta property="og:type" content="article">
-<meta property="og:title" content="搬瓦工一键搭建Shadowsocks">
-<meta property="og:url" content="https:blog.guozhenlei.top/搬瓦工一键搭建Shadowsocks.html">
+<meta property="og:title" content="Linux之循环执行的计划任务Cron">
+<meta property="og:url" content="https:blog.guozhenlei.top/Linux之循环执行的计划任务Cron-md.html">
 <meta property="og:site_name" content="磊大大的个人博客">
-<meta property="og:description" content="前言　　以前一直想买个Vps，在搬瓦工上面$19.9的一直缺货，所有一直在用一个老哥的，这次老哥续费时发现有货了，果断入手！想自己动手安装的右转：搬瓦工安装Shadowsocks">
+<meta property="og:description" content="前言学习笔记-Linux基础教程 用户的设置 /etc/cron.allow将使用Crontab的账号写入其中，不在这个文件内的用户则不可使用Crontab   /etc/cron.deny将不可使用Ctontab的账号写入其中，不在这个文件内的用户则可以使用Crontab    说明/etc/cron.allow 比 /etc/cron.deny 的优先级要高，只选择一个限制即可，系统默认保留/">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https:/img/view.jpg">
-<meta property="og:image" content="https:/img/KiViVW.jpg">
-<meta property="og:image" content="https:/img/mianban.jpg">
-<meta property="og:image" content="https:/img/goBack.jpg">
-<meta property="og:image" content="https:/img/peizhi.jpg">
-<meta property="og:updated_time" content="2018-05-19T06:46:41.000Z">
+<meta property="og:updated_time" content="2019-12-10T14:50:40.445Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="搬瓦工一键搭建Shadowsocks">
-<meta name="twitter:description" content="前言　　以前一直想买个Vps，在搬瓦工上面$19.9的一直缺货，所有一直在用一个老哥的，这次老哥续费时发现有货了，果断入手！想自己动手安装的右转：搬瓦工安装Shadowsocks">
-<meta name="twitter:image" content="https:/img/view.jpg">
+<meta name="twitter:title" content="Linux之循环执行的计划任务Cron">
+<meta name="twitter:description" content="前言学习笔记-Linux基础教程 用户的设置 /etc/cron.allow将使用Crontab的账号写入其中，不在这个文件内的用户则不可使用Crontab   /etc/cron.deny将不可使用Ctontab的账号写入其中，不在这个文件内的用户则可以使用Crontab    说明/etc/cron.allow 比 /etc/cron.deny 的优先级要高，只选择一个限制即可，系统默认保留/">
 
 
 
@@ -141,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="https:blog.guozhenlei.top/搬瓦工一键搭建Shadowsocks.html">
+  <link rel="canonical" href="https:blog.guozhenlei.top/Linux之循环执行的计划任务Cron-md.html">
 
 
 
 
 
-  <title>搬瓦工一键搭建Shadowsocks | 磊大大的个人博客</title>
+  <title>Linux之循环执行的计划任务Cron | 磊大大的个人博客</title>
   
 
 
@@ -297,7 +291,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https:blog.guozhenlei.top/搬瓦工一键搭建Shadowsocks.html">
+    <link itemprop="mainEntityOfPage" href="https:blog.guozhenlei.top/Linux之循环执行的计划任务Cron-md.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Gzl">
@@ -314,7 +308,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">搬瓦工一键搭建Shadowsocks</h2>
+          <h2 class="post-title" itemprop="name headline">Linux之循环执行的计划任务Cron</h2>
         
 
         <div class="post-meta">
@@ -326,8 +320,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-19T19:41:21+08:00">
-                2018-05-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-10T14:50:40Z">
+                2019-12-10
               </time>
             
 
@@ -349,8 +343,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/环境搭建/" itemprop="url" rel="index">
-                    <span itemprop="name">环境搭建</span>
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -367,8 +361,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/搬瓦工一键搭建Shadowsocks.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="搬瓦工一键搭建Shadowsocks.html" itemprop="commentCount"></span>
+                <a href="/Linux之循环执行的计划任务Cron-md.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="Linux之循环执行的计划任务Cron-md.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -401,13 +395,29 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>　　以前一直想买个Vps，在搬瓦工上面$19.9的一直缺货，所有一直在用一个老哥的，这次老哥续费时发现有货了，果断入手！<br>想自己动手安装的右转：<a href="/md/搬瓦工搭建Shadowsocks.html">搬瓦工安装Shadowsocks</a></p>
-<a id="more"></a>
-<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>　　<code>shadowsocks</code>是面向程序员开发的，最初的用户也都以程序员、站长为主。这导致了它搭建服务端对小白比较不友好的缺点，要自己搭建服务端，你需要懂得一定的命令行，这对于小白用户来说，太高难度了。<br>好在有热心程序员开发了针得小白用户、懒人党站长的一键包，降低了不少搭建的难度。我之前写了一篇针对小白用户使用一键包搭建<code>shadowsocks</code>的图文教程，相信能降低不少小白用户的搭建难度。<br>但小白用户如果使用一键包搭建还会觉得无从下手，怎么破？<br>　　<code>BANDWOGONHOST</code>“搬瓦工”非常贴心得针对这类用户在后台添加了一键安装<code>shadowosocks</code>的服务，实是小白用户的福音！<br>购买地址: <a href="https://bandwagonhost.com/vps-hosting.php" rel="external nofollow noopener noreferrer" target="_blank">搬瓦工</a></p>
-<h3 id="进入控制面板"><a href="#进入控制面板" class="headerlink" title="进入控制面板"></a>进入控制面板</h3><p><img src="/img/view.jpg" alt=""><br><img src="/img/KiViVW.jpg" alt=""></p>
-<h3 id="安装Shadowsocks"><a href="#安装Shadowsocks" class="headerlink" title="安装Shadowsocks"></a>安装Shadowsocks</h3><p><img src="/img/mianban.jpg" alt=""><br><img src="/img/goBack.jpg" alt=""><br><img src="/img/peizhi.jpg" alt=""></p>
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>一切就是这么简单，非常适合不是程序员，但是热爱折腾的人！</p>
-
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>学习笔记-Linux基础教程</p>
+<h2 id="用户的设置"><a href="#用户的设置" class="headerlink" title="用户的设置"></a>用户的设置</h2><ul>
+<li><p>/etc/cron.allow<br>将使用Crontab的账号写入其中，不在这个文件内的用户则不可使用Crontab </p>
+</li>
+<li><p>/etc/cron.deny<br>将不可使用Ctontab的账号写入其中，不在这个文件内的用户则可以使用Crontab </p>
+</li>
+</ul>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p><code>/etc/cron.allow</code> 比 <code>/etc/cron.deny</code> 的优先级要高，只选择一个限制即可，系统默认保留/etc/cron.deny。<br>当用户使用Crontab的建立计划任务之后，默认会在 <code>/var/spool/cron</code> 中记录。<br>当Crontab执行后，执行的记录回会保存在 <code>/var/log/cron</code> 中</p>
+<h2 id="命令详情"><a href="#命令详情" class="headerlink" title="命令详情"></a>命令详情</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">crontab</span><br><span class="line"></span><br><span class="line">-u: 只用root用户才能使用这个命令，可以帮助其他用户建立或者删除 `crontab` 计划任务</span><br><span class="line">-e: 编辑crontab的任务内容</span><br><span class="line">-l: 查看crontab的任务内容</span><br><span class="line">-r: 删除所有的crontab任务内容，如果删除一行，请用 -e 编辑</span><br></pre></td></tr></table></figure>
+<h2 id="特殊字符的用意"><a href="#特殊字符的用意" class="headerlink" title="特殊字符的用意"></a>特殊字符的用意</h2><ul>
+<li><p><code>*</code><br>任何时刻都接受的意思 </p>
+</li>
+<li><p><code>,</code><br>时段的意思，例如：如果执行的任务是3:00与6:00是，就是</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 3,6 * * * 执行的命令</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>-</code><br>代表一段范围内，例如：如果执行7:00到12:00中的每个小时都执行，就是</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 7-12 * * * 执行的命令</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>/</code><br>时间间隔，例如：每分钟执行，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*/1 * * * * 执行的命令</span><br><span class="line">也可以这样</span><br><span class="line">0-59/1 * * * * 执行的命令</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="系统的配置文件-etc-crontab-etc-cron-d"><a href="#系统的配置文件-etc-crontab-etc-cron-d" class="headerlink" title="系统的配置文件 /etc/crontab , /etc/cron.d/*"></a>系统的配置文件 <code>/etc/crontab</code> , <code>/etc/cron.d/*</code></h2>
       
     </div>
     
@@ -422,6 +432,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
 
       
       
@@ -431,8 +447,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/搬瓦工搭建Shadowsocks.html" rel="next" title="搬瓦工搭建Shadowsocks">
-                <i class="fa fa-chevron-left"></i> 搬瓦工搭建Shadowsocks
+              <a href="/Git服务器搭建以及代码自动部署教程.html" rel="next" title="Git服务器搭建以及代码自动部署教程">
+                <i class="fa fa-chevron-left"></i> Git服务器搭建以及代码自动部署教程
               </a>
             
           </div>
@@ -440,10 +456,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/无极限分类.html" rel="prev" title="无极限分类">
-                无极限分类 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -587,7 +599,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境搭建"><span class="nav-number">2.</span> <span class="nav-text">环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进入控制面板"><span class="nav-number">2.1.</span> <span class="nav-text">进入控制面板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Shadowsocks"><span class="nav-number">2.2.</span> <span class="nav-text">安装Shadowsocks</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">3.</span> <span class="nav-text">后记</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户的设置"><span class="nav-number">2.</span> <span class="nav-text">用户的设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-number">3.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令详情"><span class="nav-number">4.</span> <span class="nav-text">命令详情</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊字符的用意"><span class="nav-number">5.</span> <span class="nav-text">特殊字符的用意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统的配置文件-etc-crontab-etc-cron-d"><span class="nav-number">6.</span> <span class="nav-text">系统的配置文件 /etc/crontab , /etc/cron.d/*</span></a></li></ol></div>
             
 
           </div>
@@ -777,9 +789,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https:blog.guozhenlei.top/搬瓦工一键搭建Shadowsocks.html';
-          this.page.identifier = '搬瓦工一键搭建Shadowsocks.html';
-          this.page.title = '搬瓦工一键搭建Shadowsocks';
+          this.page.url = 'https:blog.guozhenlei.top/Linux之循环执行的计划任务Cron-md.html';
+          this.page.identifier = 'Linux之循环执行的计划任务Cron-md.html';
+          this.page.title = 'Linux之循环执行的计划任务Cron';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://disqus_k0AAUxAZIe.disqus.com/embed.js';
