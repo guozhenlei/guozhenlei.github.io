@@ -69,7 +69,7 @@
 
 
 
-  <meta name="keywords" content="磊大大">
+  <meta name="keywords" content="Linux,命令,Anacron">
 
 
 
@@ -80,17 +80,18 @@
 
 
 
-<meta name="description" content="个人日常技术记录博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="https:blog.guozhenlei.top/categories/index.html">
+<meta name="description" content="前言这个命令是帮助执行 执行时间到了却没有执行的任务anacron每小时会执行一次crond 如果执行完毕或者没有检测到执行的任务，则会停止">
+<meta name="keywords" content="Linux,命令,Anacron">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux之可唤醒停机期间的工作任务anacron">
+<meta property="og:url" content="https:blog.guozhenlei.top/Linux之可唤醒停机期间的工作任务Anacron.html">
 <meta property="og:site_name" content="磊大大的个人博客">
-<meta property="og:description" content="个人日常技术记录博客">
+<meta property="og:description" content="前言这个命令是帮助执行 执行时间到了却没有执行的任务anacron每小时会执行一次crond 如果执行完毕或者没有检测到执行的任务，则会停止">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-24T06:49:46.000Z">
+<meta property="og:updated_time" content="2019-12-12T02:26:16.990Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
-<meta name="twitter:description" content="个人日常技术记录博客">
+<meta name="twitter:title" content="Linux之可唤醒停机期间的工作任务anacron">
+<meta name="twitter:description" content="前言这个命令是帮助执行 执行时间到了却没有执行的任务anacron每小时会执行一次crond 如果执行完毕或者没有检测到执行的任务，则会停止">
 
 
 
@@ -134,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="https:blog.guozhenlei.top/categories/">
+  <link rel="canonical" href="https:blog.guozhenlei.top/Linux之可唤醒停机期间的工作任务Anacron.html">
 
 
 
 
 
-  <title>categories | 磊大大的个人博客</title>
+  <title>Linux之可唤醒停机期间的工作任务anacron | 磊大大的个人博客</title>
   
 
 
@@ -278,40 +279,204 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https:blog.guozhenlei.top/Linux之可唤醒停机期间的工作任务Anacron.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gzl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/dog.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="磊大大的个人博客">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h2 class="post-title" itemprop="name headline">categories</h2>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="category-all-page">
-            <div class="category-all-title">
-                目前共计 9 个分类
-            </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySql/">MySql</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SSH/">SSH</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/代码片段/">代码片段</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/搜索优化/">搜索优化</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/环境搭建/">环境搭建</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/自学/">自学</a><span class="category-list-count">1</span></li></ul>
-            </div>
-          </div>
+          <h2 class="post-title" itemprop="name headline">Linux之可唤醒停机期间的工作任务anacron</h2>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-12T10:04:32Z">
+                2019-12-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux之可唤醒停机期间的工作任务Anacron.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="Linux之可唤醒停机期间的工作任务Anacron.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这个命令是帮助执行 执行时间到了却没有执行的任务<code>anacron</code>每小时会执行一次<code>crond</code> 如果执行完毕或者没有检测到执行的任务，则会停止</p>
+<a id="more"></a>
+<ul>
+<li><code>anacron</code>执行的原理<br><code>anacron</code>会分析现在的时间与时间记录文件上所执行的<code>anacron</code>的时间，比较差异，从而判断哪次<code>crontab</code>没有执行。<br><code>anacron</code>默认会以 一天 七天 一月检测系统未执行的任务</li>
+</ul>
+<h2 id="基本应用"><a href="#基本应用" class="headerlink" title="基本应用"></a>基本应用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">anacron</span><br><span class="line"></span><br><span class="line">-s: 开始连续执行各项任务job 会根据时间记录问你件的数据判断是否执行</span><br><span class="line"></span><br><span class="line">-f: 强制执行， 而不去判断时间记录文件的时间戳</span><br><span class="line"> </span><br><span class="line">-n: 立刻执行未执行的文件，而不延迟等待时间</span><br><span class="line"></span><br><span class="line">-u: 仅更新时间记录文件的时间戳 不执行任何任务</span><br><span class="line"></span><br><span class="line">job: 由/etc/anacrontab 定义的各任务名称</span><br></pre></td></tr></table></figure>
+<p>因为<code>anacron</code>每小时都会执行一次，但是担心<code>anacron</code>会误判时间参数，所以才会在在 <code>/etc/cron.hourly</code>里面的 <code>anacron</code>的文件前面加上0 让<code>anacron</code>最先执行</p>
+<h2 id="配置文件-etc-anacrontab-详解"><a href="#配置文件-etc-anacrontab-详解" class="headerlink" title="配置文件 /etc/anacrontab 详解"></a>配置文件 <code>/etc/anacrontab</code> 详解</h2><p>前三行<code>cron</code>同理</p>
+<ul>
+<li><p><code>RANDOM_DELAY=45</code><br>随机设置最大延时时间 单位是分钟</p>
+</li>
+<li><p><code>STARY_HOURS_RANGE=3-22</code><br>延迟多少小时内应该要执行的任务时间 </p>
+</li>
+</ul>
+<p>1        5        cron.daily         nice  run-parts /etc/cron.daily<br>天数  延迟时间（分钟）   工作名称定义            实际要执行的命令串</p>
+<pre><code>* 天数 
+
+* 延迟时间 
+
+* 工作名称定义
+
+* 世纪要执行的命令
+</code></pre>
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/Anacron/" rel="tag"># Anacron</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Linux之循环执行的计划任务Cron.html" rel="next" title="Linux之循环执行的计划任务Cron">
+                <i class="fa fa-chevron-left"></i> Linux之循环执行的计划任务Cron
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -354,8 +519,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -417,6 +591,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本应用"><span class="nav-number">2.</span> <span class="nav-text">基本应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件-etc-anacrontab-详解"><span class="nav-number">3.</span> <span class="nav-text">配置文件 /etc/anacrontab 详解</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -601,9 +791,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https:blog.guozhenlei.top/categories/index.html';
-          this.page.identifier = 'categories/index.html';
-          this.page.title = 'categories';
+          this.page.url = 'https:blog.guozhenlei.top/Linux之可唤醒停机期间的工作任务Anacron.html';
+          this.page.identifier = 'Linux之可唤醒停机期间的工作任务Anacron.html';
+          this.page.title = 'Linux之可唤醒停机期间的工作任务anacron';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://disqus_k0AAUxAZIe.disqus.com/embed.js';
