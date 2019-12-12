@@ -69,7 +69,7 @@
 
 
 
-  <meta name="keywords" content="下拉框多选,Chosen,Layui">
+  <meta name="keywords" content="Linux,命令,Cron,Crond,Crontab">
 
 
 
@@ -80,22 +80,18 @@
 
 
 
-<meta name="description" content="前言最近有个下拉框多选的需求，由于前端技术薄弱，网上片段也比较多，就没有重复造轮子，直接找了一个插件使用！Chosen插件地址">
-<meta name="keywords" content="下拉框多选,Chosen,Layui">
+<meta name="description" content="用户的设置 /etc/cron.allow将使用Crontab的账号写入其中，不在这个文件内的用户则不可使用Crontab   /etc/cron.deny将不可使用Ctontab的账号写入其中，不在这个文件内的用户则可以使用Crontab">
+<meta name="keywords" content="Linux,命令,Cron,Crond,Crontab">
 <meta property="og:type" content="article">
-<meta property="og:title" content="下拉框多选">
-<meta property="og:url" content="https:blog.guozhenlei.top/下拉框多选.html">
+<meta property="og:title" content="Linux之循环执行的定时任务Cron">
+<meta property="og:url" content="https:blog.guozhenlei.top/Linux之循环执行的定时任务Cron.html">
 <meta property="og:site_name" content="磊大大的个人博客">
-<meta property="og:description" content="前言最近有个下拉框多选的需求，由于前端技术薄弱，网上片段也比较多，就没有重复造轮子，直接找了一个插件使用！Chosen插件地址">
+<meta property="og:description" content="用户的设置 /etc/cron.allow将使用Crontab的账号写入其中，不在这个文件内的用户则不可使用Crontab   /etc/cron.deny将不可使用Ctontab的账号写入其中，不在这个文件内的用户则可以使用Crontab">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https:/img/select.png">
-<meta property="og:image" content="https:/img/ignore.png">
-<meta property="og:image" content="https:/img/hidden.png">
-<meta property="og:updated_time" content="2018-07-04T06:26:13.000Z">
+<meta property="og:updated_time" content="2019-12-12T02:30:33.413Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="下拉框多选">
-<meta name="twitter:description" content="前言最近有个下拉框多选的需求，由于前端技术薄弱，网上片段也比较多，就没有重复造轮子，直接找了一个插件使用！Chosen插件地址">
-<meta name="twitter:image" content="https:/img/select.png">
+<meta name="twitter:title" content="Linux之循环执行的定时任务Cron">
+<meta name="twitter:description" content="用户的设置 /etc/cron.allow将使用Crontab的账号写入其中，不在这个文件内的用户则不可使用Crontab   /etc/cron.deny将不可使用Ctontab的账号写入其中，不在这个文件内的用户则可以使用Crontab">
 
 
 
@@ -139,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="https:blog.guozhenlei.top/下拉框多选.html">
+  <link rel="canonical" href="https:blog.guozhenlei.top/Linux之循环执行的定时任务Cron.html">
 
 
 
 
 
-  <title>下拉框多选 | 磊大大的个人博客</title>
+  <title>Linux之循环执行的定时任务Cron | 磊大大的个人博客</title>
   
 
 
@@ -295,7 +291,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https:blog.guozhenlei.top/下拉框多选.html">
+    <link itemprop="mainEntityOfPage" href="https:blog.guozhenlei.top/Linux之循环执行的定时任务Cron.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Gzl">
@@ -312,7 +308,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">下拉框多选</h2>
+          <h2 class="post-title" itemprop="name headline">Linux之循环执行的定时任务Cron</h2>
         
 
         <div class="post-meta">
@@ -324,8 +320,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-30T18:11:20+08:00">
-                2018-06-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-12T02:30:33Z">
+                2019-12-12
               </time>
             
 
@@ -347,8 +343,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/代码片段/" itemprop="url" rel="index">
-                    <span itemprop="name">代码片段</span>
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -365,8 +361,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/下拉框多选.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="下拉框多选.html" itemprop="commentCount"></span>
+                <a href="/Linux之循环执行的定时任务Cron.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="Linux之循环执行的定时任务Cron.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -399,14 +395,48 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近有个下拉框多选的需求，由于前端技术薄弱，网上片段也比较多，就没有重复造轮子，直接找了一个插件使用！<br><a href="https://harvesthq.github.io/chosen" rel="external nofollow noopener noreferrer" target="_blank">Chosen插件地址</a></p>
+        <h2 id="用户的设置"><a href="#用户的设置" class="headerlink" title="用户的设置"></a>用户的设置</h2><ul>
+<li><p><code>/etc/cron.allow</code><br>将使用<code>Crontab</code>的账号写入其中，不在这个文件内的用户则不可使用<code>Crontab</code> </p>
+</li>
+<li><p><code>/etc/cron.deny</code><br>将不可使用<code>Ctontab</code>的账号写入其中，不在这个文件内的用户则可以使用<code>Crontab</code> </p>
+</li>
+</ul>
 <a id="more"></a>
-<h2 id="代码片段"><a href="#代码片段" class="headerlink" title="代码片段"></a>代码片段</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">lay-ignore</span> <span class="attr">class</span>=<span class="string">"chosen-select"</span> <span class="attr">multiple</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">optgroup</span> <span class="attr">label</span>=<span class="string">"水果"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"y"</span> <span class="attr">selected</span>&gt;</span>苹果<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"b"</span>&gt;</span>香蕉<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"o"</span> <span class="attr">selected</span>&gt;</span>橘子<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"m"</span>&gt;</span>芒果<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">optgroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">optgroup</span> <span class="attr">label</span>=<span class="string">"装备"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"phone"</span>&gt;</span>手机<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"im"</span>&gt;</span>一体机<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"mbp"</span>&gt;</span>笔记本<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">optgroup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=<span class="string">"stylesheet"</span> href=<span class="string">"__CHOSEN__/chosen.css"</span>&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">"https://code.jquery.com/jquery-3.3.1.min.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script src=<span class="string">"__CHOSEN__/chosen.jquery.min.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="comment">//select text获取，多选时请注意</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">chose_get_text</span>(<span class="params">select</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $(select+<span class="string">" option:selected"</span>).text();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取select选中的值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">chose_get_value</span>(<span class="params">select</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $(select).val();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//初始化</span></span><br><span class="line">$(<span class="string">'.chosen-select'</span>).chosen(&#123;</span><br><span class="line">    width: <span class="string">"95%"</span> <span class="comment">//设置Select框的宽度</span></span><br><span class="line">    <span class="comment">//更多参数请去 (https://harvesthq.github.io/chosen) 查看</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">$(<span class="string">'.chosen-select'</span>).chosen().change(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(chose_get_value(<span class="string">'.chosen-select'</span>) + <span class="string">' : '</span>+ chose_get_text(<span class="string">'.chosen-select'</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="/img/select.png" alt=""></p>
-<h4 id="如果你跟我一样使用Layui的话就会导致冲突"><a href="#如果你跟我一样使用Layui的话就会导致冲突" class="headerlink" title="如果你跟我一样使用Layui的话就会导致冲突"></a>如果你跟我一样使用Layui的话就会导致冲突</h4><p><img src="/img/ignore.png" alt=""> 或者<br><img src="/img/hidden.png" alt=""></p>
-<p>添加两个属性即可解决<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;select lay-ignore <span class="class"><span class="keyword">class</span></span>=<span class="string">"layui-hide chosen-select"</span> multiple data-placeholder=<span class="string">"请选择一个选项"</span>&gt;</span><br><span class="line"><span class="comment">//给seelct 添加 lay-ignore属性 以及  添加 layui-hide 类名</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p><code>/etc/cron.allow</code> 比 <code>/etc/cron.deny</code> 的优先级要高，只选择一个限制即可，系统默认保留<code>/etc/cron.deny</code>。<br>当用户使用<code>Crontab</code> 建立计划任务之后，默认会在 <code>/var/spool/cron</code> 中记录。<br>当<code>Crontab</code>执行后，执行的记录回会保存在 <code>/var/log/cron</code> 中</p>
+<h2 id="命令详情"><a href="#命令详情" class="headerlink" title="命令详情"></a>命令详情</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">crontab</span><br><span class="line"></span><br><span class="line">-u: 只有root用户才能使用这个命令，可以帮助其他用户建立或者删除 `crontab` 计划任务</span><br><span class="line">-e: 编辑crontab的任务内容</span><br><span class="line">-l: 查看crontab的任务内容</span><br><span class="line">-r: 删除所有的crontab任务内容，如果删除一行，请用 -e 编辑</span><br></pre></td></tr></table></figure>
+<h2 id="特殊字符的用意"><a href="#特殊字符的用意" class="headerlink" title="特殊字符的用意"></a>特殊字符的用意</h2><ul>
+<li><p><code>*</code><br>任何时刻都接受的意思 </p>
+</li>
+<li><p><code>,</code><br>时段的意思，例如：如果执行的任务是3:00到6:00时的某一时间，则示例为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 3,6 * * * 执行的命令</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>-</code><br>代表一段范围内，例如：如果执行7:00到12:00中的每个小时都执行，则示例为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 7-12 * * * 执行的命令</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>/</code><br>时间间隔，例如：每分钟执行，则示例为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*/1 * * * * 执行的命令</span><br><span class="line">也可以这样</span><br><span class="line">0-59/1 * * * * 执行的命令</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="系统的配置文件-etc-crontab-etc-cron-d"><a href="#系统的配置文件-etc-crontab-etc-cron-d" class="headerlink" title="系统的配置文件 /etc/crontab , /etc/cron.d/*"></a>系统的配置文件 <code>/etc/crontab</code> , <code>/etc/cron.d/*</code></h2><p><code>crontab -e</code> 是针对用户设计的，如果执行系统的例行任务时，也需要这个命令吗？No，你只需要编辑 <code>/etc/crontab</code> 这个文件就可以，特别注意，那就是 <code>crontab -e</code> 这个命令其实是 <code>/usr/bin/crontab</code> 这个执行文件，但是 <code>/etc/crontab</code> 这个是个纯文本文件，只需要保存更改，<code>cron</code>即可自动执行<br><code>(每分钟重新读取，如果有问题，可以尝试重启cron)</code></p>
+<h3 id="etc-crontab-详解"><a href="#etc-crontab-详解" class="headerlink" title="/etc/crontab 详解"></a><code>/etc/crontab</code> 详解</h3><ul>
+<li><code>MAILTO=root</code><br>默认把执行错误的内容发送给<code>root</code>用户，但是<code>root</code>用户无法在客户端以POP3之类的协议通信，所以一般我们改成自己的邮箱号码<br>(如果错误过多，提醒很频繁，可以使用重定向 <code>&gt;</code>)</li>
+<li><p><code>PATH= ...</code><br>执行文件的查找路径，使用默认即可</p>
+</li>
+<li><p>[分 时 日 月 周 身份 命令] 字段的设置<br>跟<code>crontab -e</code>不同，时间后面不直接跟命令，而是需要一个用户名称，来判断用哪个账户执行，默认<code>root</code>账户</p>
+</li>
+<li><p><code>cron</code>读取配置文件的位置</p>
+<ul>
+<li><code>/etc/crontab</code></li>
+<li><code>/etc/cron.d/*</code></li>
+<li><code>/var/spool/cron/*</code></li>
+</ul>
+<p>这三个文件，跟系统运行有关系的为 <code>/etc/crontab</code>，<code>/etc/cron.d/*</code>,跟用户有关系的则放在 <code>/var/spool/cron/*</code></p>
+</li>
+</ul>
+<h3 id="etc-cron-d-详解"><a href="#etc-cron-d-详解" class="headerlink" title="/etc/cron.d/* 详解"></a><code>/etc/cron.d/*</code> 详解</h3><p>说明：如果你想要开发自己的软件什么的，该软件需要自己的<code>crontab</code><br>定时命令，那么你就可以将配置文件放置在改目录下面</p>
+<ul>
+<li>最后一行<code>[run-parts /etc/cron.hourly]</code>意思<br><code>run-parts</code> 是个<code>shell</code>脚本，该脚本会在5分钟执内的随意一个时间来执行 <code>/etc/cron.hourly</code> 目录内的所有执行文件，并且，该文件下的<code>/etc/cron.daily/</code>, <code>/etc/weekly/</code>, <code>/etc/monthly</code> 同理，代表每日 每周 每月执行，不过跟<code>/etc/cron.hourly</code>不一样的是他们三个是由 <code>anacron</code> 所执行， 执行方式在 <code>/etc/cron.hourly/0anacron</code>里</li>
+</ul>
 
       
     </div>
@@ -424,9 +454,15 @@
       
         <div class="post-tags">
           
-            <a href="/tags/下拉框多选/" rel="tag"># 下拉框多选</a>
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
           
-            <a href="/tags/Chosen，-Layui/" rel="tag"># Chosen， Layui</a>
+            <a href="/tags/Cron/" rel="tag"># Cron</a>
+          
+            <a href="/tags/Crond/" rel="tag"># Crond</a>
+          
+            <a href="/tags/Crontab/" rel="tag"># Crontab</a>
+          
+            <a href="/tags/定时任务/" rel="tag"># 定时任务</a>
           
         </div>
       
@@ -439,8 +475,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/无极限分类.html" rel="next" title="无极限分类">
-                <i class="fa fa-chevron-left"></i> 无极限分类
+              <a href="/Git服务器搭建以及代码自动部署教程.html" rel="next" title="Git服务器搭建以及代码自动部署教程">
+                <i class="fa fa-chevron-left"></i> Git服务器搭建以及代码自动部署教程
               </a>
             
           </div>
@@ -449,8 +485,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/MySql优化三部曲之存储层优化.html" rel="prev" title="MySql优化三部曲之存储层优化">
-                MySql优化三部曲之存储层优化 <i class="fa fa-chevron-right"></i>
+              <a href="/Linux之可唤醒停机期间的工作任务Anacron.html" rel="prev" title="Linux之可唤醒停机期间的工作任务anacron">
+                Linux之可唤醒停机期间的工作任务anacron <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -595,7 +631,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码片段"><span class="nav-number">2.</span> <span class="nav-text">代码片段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS"><span class="nav-number">2.1.</span> <span class="nav-text">CSS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS"><span class="nav-number">2.2.</span> <span class="nav-text">JS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如果你跟我一样使用Layui的话就会导致冲突"><span class="nav-number">2.2.1.</span> <span class="nav-text">如果你跟我一样使用Layui的话就会导致冲突</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#用户的设置"><span class="nav-number">1.</span> <span class="nav-text">用户的设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-number">2.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令详情"><span class="nav-number">3.</span> <span class="nav-text">命令详情</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊字符的用意"><span class="nav-number">4.</span> <span class="nav-text">特殊字符的用意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统的配置文件-etc-crontab-etc-cron-d"><span class="nav-number">5.</span> <span class="nav-text">系统的配置文件 /etc/crontab , /etc/cron.d/*</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#etc-crontab-详解"><span class="nav-number">5.1.</span> <span class="nav-text">/etc/crontab 详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#etc-cron-d-详解"><span class="nav-number">5.2.</span> <span class="nav-text">/etc/cron.d/* 详解</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -785,9 +821,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https:blog.guozhenlei.top/下拉框多选.html';
-          this.page.identifier = '下拉框多选.html';
-          this.page.title = '下拉框多选';
+          this.page.url = 'https:blog.guozhenlei.top/Linux之循环执行的定时任务Cron.html';
+          this.page.identifier = 'Linux之循环执行的定时任务Cron.html';
+          this.page.title = 'Linux之循环执行的定时任务Cron';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://disqus_k0AAUxAZIe.disqus.com/embed.js';
