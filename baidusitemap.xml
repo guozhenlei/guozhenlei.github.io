@@ -5,7 +5,7 @@
     
   <url>
     <loc>https:blog.guozhenlei.top/Linux%E4%B9%8B%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86.html</loc>
-    <lastmod>2019-12-16T13:38:04.738Z</lastmod>
+    <lastmod>2019-12-16T13:50:55.007Z</lastmod>
     <data>
         <display>
         <title>Linux之进程管理</title>
@@ -17,26 +17,13 @@
          
         <tag>pstree</tag>
          
+        <tag>进程管理</tag>
+         
          
            
              
               <breadCrumb title="Linux" url="https:blog.guozhenlei.top/categories/Linux/"/>
           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https:blog.guozhenlei.top/Linux%E4%B9%8B%E4%BB%BB%E5%8A%A1%E7%AE%A1%E7%90%86Jobs.html</loc>
-    <lastmod>2019-12-16T12:30:07.408Z</lastmod>
-    <data>
-        <display>
-        <title>Linux之任务管理Jobs</title>
-        <pubTime>2019-12-16T20:30:07.000Z</pubTime>
-        
-         
-           
         </display>
     </data>
     </url>
@@ -288,13 +275,13 @@
         <title>MySql优化三部曲之设计层优化(上)</title>
         <pubTime>2018-07-10T15:32:18.000Z</pubTime>
         
-        <tag>分区</tag>
-         
-        <tag>分表</tag>
-         
         <tag>SQL优化</tag>
          
         <tag>索引</tag>
+         
+        <tag>分区</tag>
+         
+        <tag>分表</tag>
          
         <tag>三范式</tag>
          

@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="磊大大的个人博客">
 <meta property="og:description" content="前言进程管理可以使用多种命令查看，有静态的ps，动态的top，或者已进程数关系的pstree">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-16T13:38:04.738Z">
+<meta property="og:updated_time" content="2019-12-16T13:50:55.007Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux之进程管理">
 <meta name="twitter:description" content="前言进程管理可以使用多种命令查看，有静态的ps，动态的top，或者已进程数关系的pstree">
@@ -320,7 +320,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-16T20:31:22Z">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-17T04:31:22+08:00">
                 2019-12-16
               </time>
             
@@ -395,15 +395,15 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>进程管理可以使用多种命令查看，有静态的ps，动态的top，或者已进程数关系的pstree</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>进程管理可以使用多种命令查看，有静态的<code>ps</code>，动态的<code>top</code>，或者已进程数关系的<code>pstree</code></p>
 <a id="more"></a>
-<h2 id="ps详解"><a href="#ps详解" class="headerlink" title="ps详解"></a>ps详解</h2><h3 id="ps命令详解"><a href="#ps命令详解" class="headerlink" title="ps命令详解"></a>ps命令详解</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ps</span><br><span class="line"></span><br><span class="line">-A: 所有的进程均显示出来，与-e具有相同的效果</span><br><span class="line">-a: 不显示与终端有关的所有进程</span><br><span class="line">-u: 有效使用者(effective user)相关的进程</span><br><span class="line">x : 通常与a这个参数一起使用，可列比较完成的信息</span><br><span class="line">输出格式规划:</span><br><span class="line">l : 较长，较详细的将该PID的信息列出</span><br><span class="line">j : 任务的格式(<span class="built_in">jobs</span> format)</span><br><span class="line">-f: 做一个更为完整的输出</span><br><span class="line"></span><br><span class="line">通常你只需要记住连个命令：</span><br><span class="line">1. 只能查看自己bash的进程 ps -l</span><br><span class="line">2. 查看系统运行的所有进程 ps aux</span><br></pre></td></tr></table></figure>
-<h3 id="ps-l详解"><a href="#ps-l详解" class="headerlink" title="ps -l详解"></a>ps -l详解</h3><p>ps -l仅会列出与你的操作环境bash相关的进程，即最上层的父进程是你自己的bash而没有扩展到systemd(后续介绍)这个进程中。</p>
+<h2 id="ps详解"><a href="#ps详解" class="headerlink" title="ps详解"></a><code>ps</code>详解</h2><h3 id="ps命令详解"><a href="#ps命令详解" class="headerlink" title="ps命令详解"></a><code>ps</code>命令详解</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ps</span><br><span class="line"></span><br><span class="line">-A: 所有的进程均显示出来，与-e具有相同的效果</span><br><span class="line">-a: 不显示与终端有关的所有进程</span><br><span class="line">-u: 有效使用者(effective user)相关的进程</span><br><span class="line">x : 通常与a这个参数一起使用，可列比较完成的信息</span><br><span class="line">输出格式规划:</span><br><span class="line">l : 较长，较详细的将该PID的信息列出</span><br><span class="line">j : 任务的格式(<span class="built_in">jobs</span> format)</span><br><span class="line">-f: 做一个更为完整的输出</span><br><span class="line"></span><br><span class="line">通常你只需要记住连个命令：</span><br><span class="line">1. 只能查看自己bash的进程 ps -l</span><br><span class="line">2. 查看系统运行的所有进程 ps aux</span><br></pre></td></tr></table></figure>
+<h3 id="ps-l详解"><a href="#ps-l详解" class="headerlink" title="ps -l详解"></a><code>ps -l</code>详解</h3><p><code>ps -l</code>仅会列出与你的操作环境<code>bash</code>相关的进程，即最上层的父进程是你自己的<code>bash</code>而没有扩展到<code>systemd</code>(后续介绍)这个进程中。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@iZm5eemox1hfck7dpji7yeZ ~]<span class="comment"># ps -l</span></span><br><span class="line">F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD</span><br><span class="line">4 S     0  3006  3004  0  80   0 - 28893 do_wai pts/6    00:00:00 bash</span><br><span class="line">0 R     0  3021  3006  0  80   0 - 38309 -      pts/6    00:00:00 ps</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>F : 代表这个进程的标示，说明这个进程的权限。</p>
 <ul>
-<li>4 ：表示此进程的权限为root</li>
+<li>4 ：表示此进程的权限为<code>root</code></li>
 <li>1 ： 表示此子进程仅执行复制(fork),而没有实际执行(exec)</li>
 </ul>
 </li>
@@ -420,11 +420,11 @@
 </li>
 <li><p>C : 代表CPU的使用率(百分比)</p>
 </li>
-<li><p>PRI/NI : Priority/Nice 的缩写，代表此进程被CPU所执行的优先级(数字越小，优先级越高)</p>
+<li><p>PRI/NI : Priority/Nice 的缩写，代表此进程被<code>CPU</code>所执行的优先级(数字越小，优先级越高)</p>
 </li>
 <li><p>ADDR/SZ/WCHAN : 与内存有关</p>
 <ul>
-<li>ADDR  : 指的是kernel function，指出该进程在内存的哪个部分，如果是个Runing的进程，一般会显示[-]</li>
+<li>ADDR  : 指的是kernel function，指出该进程在内存的哪个部分，如果是个<code>Runing</code>的进程，一般会显示[-]</li>
 <li>SZ    : 代表此进程用掉多少内存(K) </li>
 <li>WCHAN : 代表目前的进程是否在运行，如果在运行，同样为[-]</li>
 </ul>
@@ -484,6 +484,8 @@
           
             <a href="/tags/pstree/" rel="tag"># pstree</a>
           
+            <a href="/tags/进程管理/" rel="tag"># 进程管理</a>
+          
         </div>
       
 
@@ -495,8 +497,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/Linux之任务管理Jobs.html" rel="next" title="Linux之任务管理Jobs">
-                <i class="fa fa-chevron-left"></i> Linux之任务管理Jobs
+              <a href="/Linux之可唤醒停机期间的工作任务Anacron.html" rel="next" title="Linux之可唤醒停机期间的工作任务anacron">
+                <i class="fa fa-chevron-left"></i> Linux之可唤醒停机期间的工作任务anacron
               </a>
             
           </div>
@@ -592,7 +594,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -614,7 +616,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">47</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -1,5 +1,4 @@
 https:blog.guozhenlei.top/Linux之进程管理.html
-https:blog.guozhenlei.top/Linux之任务管理Jobs.html
 https:blog.guozhenlei.top/Linux之可唤醒停机期间的工作任务Anacron.html
 https:blog.guozhenlei.top/Linux之循环执行的定时任务Cron.html
 https:blog.guozhenlei.top/Git服务器搭建以及代码自动部署教程.html
