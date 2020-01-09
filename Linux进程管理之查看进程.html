@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="DjWo83eqzDI8jDOvqce_4gvpbEzYI_HthXoohEiN4Pk">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/dog.jpeg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-dog.jpeg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-dog.jpeg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ps,top,pstree,进程管理,查看进程,Centos7">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言进程管理可以使用多种命令查看，有静态的ps，动态的top，或者已进程数关系的pstree">
+<meta name="keywords" content="ps,top,pstree,进程管理,查看进程,Centos7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux进程管理之查看进程">
+<meta property="og:url" content="https:blog.guozhenlei.top/Linux进程管理之查看进程.html">
+<meta property="og:site_name" content="磊大大的个人博客">
+<meta property="og:description" content="前言进程管理可以使用多种命令查看，有静态的ps，动态的top，或者已进程数关系的pstree">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-01-08T13:26:17.630Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux进程管理之查看进程">
+<meta name="twitter:description" content="前言进程管理可以使用多种命令查看，有静态的ps，动态的top，或者已进程数关系的pstree">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Gzl'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+  <link rel="canonical" href="https:blog.guozhenlei.top/Linux进程管理之查看进程.html">
+
+
+
+
+
+  <title>Linux进程管理之查看进程 | 磊大大的个人博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d06a86df5420e1956c374ce450f28878";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">磊大大的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">学习笔记</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https:blog.guozhenlei.top/Linux进程管理之查看进程.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gzl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/dog.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="磊大大的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Linux进程管理之查看进程</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-17T04:31:22+08:00">
+                2019-12-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/Centos7/" itemprop="url" rel="index">
+                    <span itemprop="name">Centos7</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux进程管理之查看进程.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="Linux进程管理之查看进程.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>进程管理可以使用多种命令查看，有静态的<code>ps</code>，动态的<code>top</code>，或者已进程数关系的<code>pstree</code></p>
+<a id="more"></a>
+<h2 id="ps详解"><a href="#ps详解" class="headerlink" title="ps详解"></a><code>ps</code>详解</h2><h3 id="ps命令详解"><a href="#ps命令详解" class="headerlink" title="ps命令详解"></a><code>ps</code>命令详解</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ps</span><br><span class="line"></span><br><span class="line">-A: 所有的进程均显示出来，与-e具有相同的效果</span><br><span class="line">-a: 不显示与终端有关的所有进程</span><br><span class="line">-u: 有效使用者(effective user)相关的进程</span><br><span class="line">x : 通常与a这个参数一起使用，可列比较完成的信息</span><br><span class="line">输出格式规划:</span><br><span class="line">l : 较长，较详细的将该PID的信息列出</span><br><span class="line">j : 任务的格式(<span class="built_in">jobs</span> format)</span><br><span class="line">-f: 做一个更为完整的输出</span><br><span class="line"></span><br><span class="line">通常你只需要记住连个命令：</span><br><span class="line">1. 只能查看自己bash的进程 ps -l</span><br><span class="line">2. 查看系统运行的所有进程 ps aux</span><br></pre></td></tr></table></figure>
+<h3 id="ps-l详解"><a href="#ps-l详解" class="headerlink" title="ps -l详解"></a><code>ps -l</code>详解</h3><p><code>ps -l</code>仅会列出与你的操作环境<code>bash</code>相关的进程，即最上层的父进程是你自己的<code>bash</code>而没有扩展到<code>systemd</code>(后续介绍)这个进程中。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@iZm5eemox1hfck7dpji7yeZ ~]<span class="comment"># ps -l</span></span><br><span class="line">F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD</span><br><span class="line">4 S     0  3006  3004  0  80   0 - 28893 do_wai pts/6    00:00:00 bash</span><br><span class="line">0 R     0  3021  3006  0  80   0 - 38309 -      pts/6    00:00:00 ps</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>F : 代表这个进程的标示，说明这个进程的权限。</p>
+<ul>
+<li>4 ：表示此进程的权限为<code>root</code></li>
+<li>1 ： 表示此子进程仅执行复制(fork),而没有实际执行(exec)</li>
+</ul>
+</li>
+<li><p>S : 代表这个进程的状态。</p>
+<ul>
+<li>R(Runing) : 该进程正在运行中</li>
+<li>S(Sleep) : 该进程目前正在睡眠中(idle)，但是可以被唤醒(signal)</li>
+<li>D : 不可被唤醒的睡眠状态，通常这个进程可能在等待I/O的情况(ex&gt;打印)</li>
+<li>T : 停止状态(stop)，可能是在任务的控制(后台暂停)或跟踪(traned)状态</li>
+<li>Z(Zombie) : 僵尸状态，进程已经终止但却无法被删除至内存外</li>
+</ul>
+</li>
+<li><p>UID/PID/PPID : 代表此进场被该UID所拥有/进程的PID号码/此进程的父进程PID号码</p>
+</li>
+<li><p>C : 代表CPU的使用率(百分比)</p>
+</li>
+<li><p>PRI/NI : Priority/Nice 的缩写，代表此进程被<code>CPU</code>所执行的优先级(数字越小，优先级越高)</p>
+</li>
+<li><p>ADDR/SZ/WCHAN : 与内存有关</p>
+<ul>
+<li>ADDR  : 指的是kernel function，指出该进程在内存的哪个部分，如果是个<code>Runing</code>的进程，一般会显示[-]</li>
+<li>SZ    : 代表此进程用掉多少内存(K) </li>
+<li>WCHAN : 代表目前的进程是否在运行，如果在运行，同样为[-]</li>
+</ul>
+</li>
+<li><p>TTY : 登陆者的终端位置，若为远程登陆，则使用动态终端接口名称[pst/n]</p>
+</li>
+<li><p>TIME : 使用的CPU时间，指的是此进程实际花费CPU的运行时间，而不是系统时间</p>
+</li>
+<li><p>CMD : 就是command的缩写，表示造成此进程的触发进程的命令是什么</p>
+</li>
+</ul>
+<h3 id="ps-aux详情"><a href="#ps-aux详情" class="headerlink" title="ps aux详情"></a><code>ps aux</code>详情</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@iZm5eemox1hfck7dpji7yeZ ~]<span class="comment"># ps aux</span></span><br><span class="line">USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</span><br><span class="line">root         1  0.0  0.3  43576  3760 ?        Ss   6月06  33:54 /usr/lib/syste</span><br><span class="line">root         2  0.0  0.0      0     0 ?        S    6月06   0:00 [kthreadd]</span><br><span class="line">......</span><br><span class="line">root      3006  0.0  0.2 115572  2084 pts/6    Ss+  20:58   0:00 -bash</span><br><span class="line">......</span><br><span class="line">root      3428  0.0  0.1 155360  1888 pts/6    R+   21:26   0:00 ps aux</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>USER : 该进程所属用户的账号</p>
+</li>
+<li><p>PID : 该进程的进程ID</p>
+</li>
+<li><p>%CPU : 该进程使用掉的CPU资源百分比</p>
+</li>
+<li><p>%MEM : 该进程所含用的物理内存百分比</p>
+</li>
+<li><p>VSZ : 该进程使用掉的虚拟内存量(KB)</p>
+</li>
+<li><p>RSS : 该进程占用的固定的内存量(KB)</p>
+</li>
+<li><p>TTY : 该进程是在哪个终端上面运行的，若与终端无关则显示[?]，另外[tt1-tt6]是本机上面的登陆进程，[pst/n]是网络链接进入主机的进程</p>
+</li>
+<li><p>STAT : 该进程目前的状态，状态显示与[ps -l]的S标示相同</p>
+</li>
+<li><p>START : 该进程被触发启动的时间</p>
+</li>
+<li><p>TIME : 该进程实际使用CPU运行的时间</p>
+</li>
+<li><p>COMMAND : 该进程实际命令</p>
+</li>
+</ul>
+<h2 id="top详解"><a href="#top详解" class="headerlink" title="top详解"></a>top详解</h2><h3 id="top-命令详解"><a href="#top-命令详解" class="headerlink" title="top 命令详解"></a>top 命令详解</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@iZm5eemox1hfck7dpji7yeZ ~]<span class="comment"># top</span></span><br><span class="line">-d : 后面可以接秒数，就是整个进程界面更新的秒数，默认是5秒</span><br><span class="line">-b : 已批量的方式执行top，还有更多的参数可以使用，通常会搭配数据流重定向来将批量的结果输出为文件</span><br><span class="line">-n : 与-b搭配，意义是，需要执行几次top的输出结果</span><br><span class="line">-p : 指定某些个PID来执行才看监测而已</span><br><span class="line"></span><br><span class="line">在执行top的过程中可以使用的按键命令:</span><br><span class="line">    ? : 显示在top当中可以输入的按键命令 </span><br><span class="line">    P : 已CPU的使用排序显示 </span><br><span class="line">    M : 已Memory的使用排序显示 </span><br><span class="line">    N : 已PID来排序 </span><br><span class="line">    T : 由该进程使用的CPU时间积累排序(TIME+) </span><br><span class="line">    k : 给予某个PID一个信号(signal) </span><br><span class="line">    r : 给予某个PID重新执行一个nice值 </span><br><span class="line">    q : 退出top</span><br></pre></td></tr></table></figure>
+<h3 id="top参数详解"><a href="#top参数详解" class="headerlink" title="top参数详解"></a>top参数详解</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@iZm5eemox1hfck7dpji7yeZ ~]<span class="comment"># top -d 5</span></span><br><span class="line">top - 21:54:14 up 10 days, 11:51,  3 users,  load average: 0.00, 0.03, 0.05</span><br><span class="line">Tasks:  95 total,   2 running,  93 sleeping,   0 stopped,   0 zombie</span><br><span class="line">%Cpu(s):  0.8 us,  1.0 sy,  0.0 ni, 98.2 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">KiB Mem :  1014908 total,    98316 free,   159600 used,   756992 buff/cache</span><br><span class="line">KiB Swap:  1048572 total,   855524 free,   193048 used.   686376 avail Mem</span><br><span class="line"></span><br><span class="line">  PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND</span><br><span class="line"> 1967 root      10 -10  132572   8860   6084 S  1.8  0.9 296:51.26 AliYunDun</span><br><span class="line">  743 root      20   0  162000   2260   1588 R  0.2  0.2   0:00.01 top</span><br><span class="line">    1 root      20   0   43572   2328   1344 S  0.0  0.2   0:37.47 systemd</span><br><span class="line">    2 root      20   0       0      0      0 S  0.0  0.0   0:00.02 kthreadd</span><br><span class="line">    3 root      20   0       0      0      0 S  0.0  0.0   0:23.29 ksoftirqd/0</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>第一行 (top - ) ： 这一行显示的信息分别为 : </p>
+<ul>
+<li>目前的时间，即 (21:54:14)</li>
+<li>开机到目前为止所经过的时间, 即 (up 10 days)</li>
+<li>已经登陆系统的用户人数, 即 (3 users)</li>
+<li>系统在 1、5、15 分钟的平均任务负载。代表系统平均要督责运行几个进程，数值越小代表系统越闲置，若高于1，则要注意系统进程是否太过频繁</li>
+</ul>
+</li>
+<li><p>第二行 (Tasks) : 显示的是目前进程的总量与个别进程在什么状态 (running、sleeping、stopped、zombie),需要注意的是最后面的zombie这个数值，如果不是0，赶紧好好看看到底是哪个process变成僵尸进程了</p>
+</li>
+<li><p>第三行 (%Cpu(s)) : 显示的CPU的整体负载，每个项目可使用(?)查看，需要之一的是 wa 项目，这个项目代表的是 I/O wait。通常你的系统会变慢都是I/O造成的，因此这里要注意这个项目消耗的CPU资源，另外，如果设备是多内核的设备，可以按下数字键(1)来切换成不同CPU的负载率</p>
+</li>
+<li><p>第四行第五行 (Mem Swap) : 表示目前的物理内存与虚拟内存的使用情况，注意Swap要尽量使用的少，如果使用的很多，表示系统的物理内存不足</p>
+</li>
+<li><p>第六行 ： 这个是当在top进程当中输入命令是，显示状态的地方：</p>
+<ul>
+<li>PID : 每个进程的PID</li>
+<li>USER : 该进程所属的用户</li>
+<li>PR : Priority的简写，进程的优先执行顺序，越小则越早被执行</li>
+<li>NI : Nice的简写，与Priority有关，也是越小则越早被执行</li>
+<li>%CPU : CPU的使用率</li>
+<li>%MEM : 内存的使用率</li>
+<li>TIME+ : CPU使用时间的累加</li>
+</ul>
+</li>
+</ul>
+<p>注意，top默认使用(%CPU)的使用率作为排序依据</p>
+<h2 id="pstree详解"><a href="#pstree详解" class="headerlink" title="pstree详解"></a>pstree详解</h2><h3 id="pstree命令详情"><a href="#pstree命令详情" class="headerlink" title="pstree命令详情"></a>pstree命令详情</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@iZm5eemox1hfck7dpji7yeZ ~]<span class="comment"># pstree</span></span><br><span class="line">-A : 各进程树之间的连接以ASCII字符来连接</span><br><span class="line">-U : 各进程树之间的连接以Unicode的字符来连接，在某些终端界面下可能会有错误</span><br><span class="line">-p : 并同时列出每个进程的PID</span><br><span class="line">-u : 并同时列出每个进程的所属账号名称</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@iZm5eemox1hfck7dpji7yeZ ~]<span class="comment"># pstree -A</span></span><br><span class="line">systemd-+-AliYunDun---2*[&#123;AliYunDun&#125;]</span><br><span class="line">        |-rsyslogd---2*[&#123;rsyslogd&#125;]  <span class="comment">#前面的数据代表进程数</span></span><br><span class="line">        |-sshd---sshd---bash---pstree  <span class="comment">#命令执行的依赖性</span></span><br></pre></td></tr></table></figure>
+<p>查找进程之间的相关性，用pstree是最好不多的，它会使用线段将相关性进程连接起来，一般的连接符号使用ASCII码，有时因为语系的问题会主动以Unicode的符号来连接，但是如果终端不支持次编码，会导致乱码的问题，因此可以加上-A来解决此问题</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ps/" rel="tag"># ps</a>
+          
+            <a href="/tags/top/" rel="tag"># top</a>
+          
+            <a href="/tags/pstree/" rel="tag"># pstree</a>
+          
+            <a href="/tags/进程管理/" rel="tag"># 进程管理</a>
+          
+            <a href="/tags/查看进程/" rel="tag"># 查看进程</a>
+          
+            <a href="/tags/Centos7/" rel="tag"># Centos7</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Linux之可唤醒停机期间的工作任务Anacron.html" rel="next" title="Linux之可唤醒停机期间的工作任务anacron">
+                <i class="fa fa-chevron-left"></i> Linux之可唤醒停机期间的工作任务anacron
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Linux进程管理之进程的管理.html" rel="prev" title="Linux进程管理之进程的管理">
+                Linux进程管理之进程的管理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript" rel="external nofollow noopener noreferrer" target="_blank">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/img/dog.jpeg" alt="Gzl">
+            
+              <p class="site-author-name" itemprop="name">Gzl</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ps详解"><span class="nav-number">2.</span> <span class="nav-text">ps详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ps命令详解"><span class="nav-number">2.1.</span> <span class="nav-text">ps命令详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-l详解"><span class="nav-number">2.2.</span> <span class="nav-text">ps -l详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-aux详情"><span class="nav-number">2.3.</span> <span class="nav-text">ps aux详情</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#top详解"><span class="nav-number">3.</span> <span class="nav-text">top详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#top-命令详解"><span class="nav-number">3.1.</span> <span class="nav-text">top 命令详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#top参数详解"><span class="nav-number">3.2.</span> <span class="nav-text">top参数详解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pstree详解"><span class="nav-number">4.</span> <span class="nav-text">pstree详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pstree命令详情"><span class="nav-number">4.1.</span> <span class="nav-text">pstree命令详情</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gzl</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="http://hexo.io" rel="external nofollow noopener noreferrer">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow noopener noreferrer">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://disqus_k0AAUxAZIe.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https:blog.guozhenlei.top/Linux进程管理之查看进程.html';
+          this.page.identifier = 'Linux进程管理之查看进程.html';
+          this.page.title = 'Linux进程管理之查看进程';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://disqus_k0AAUxAZIe.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

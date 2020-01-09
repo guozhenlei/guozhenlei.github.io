@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="DjWo83eqzDI8jDOvqce_4gvpbEzYI_HthXoohEiN4Pk">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/dog.jpeg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-dog.jpeg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-dog.jpeg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ps,top,pstree,进程管理,查看进程,Centos7">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言进程之间是可以相互控制的，你可以关闭、重启服务器软件，服务器本身就是个进程，你既然可以让它关闭或者启动，当然就可以控制进程。 那我们如果管理进程呢，其实是通过给予进程一个信号(signal)去告诉进程你想要它做什么。">
+<meta name="keywords" content="ps,top,pstree,进程管理,查看进程,Centos7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux进程管理之进程的管理">
+<meta property="og:url" content="https:blog.guozhenlei.top/Linux进程管理之进程的管理.html">
+<meta property="og:site_name" content="磊大大的个人博客">
+<meta property="og:description" content="前言进程之间是可以相互控制的，你可以关闭、重启服务器软件，服务器本身就是个进程，你既然可以让它关闭或者启动，当然就可以控制进程。 那我们如果管理进程呢，其实是通过给予进程一个信号(signal)去告诉进程你想要它做什么。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-01-09T09:42:19.958Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux进程管理之进程的管理">
+<meta name="twitter:description" content="前言进程之间是可以相互控制的，你可以关闭、重启服务器软件，服务器本身就是个进程，你既然可以让它关闭或者启动，当然就可以控制进程。 那我们如果管理进程呢，其实是通过给予进程一个信号(signal)去告诉进程你想要它做什么。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Gzl'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+  <link rel="canonical" href="https:blog.guozhenlei.top/Linux进程管理之进程的管理.html">
+
+
+
+
+
+  <title>Linux进程管理之进程的管理 | 磊大大的个人博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d06a86df5420e1956c374ce450f28878";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">磊大大的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">学习笔记</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https:blog.guozhenlei.top/Linux进程管理之进程的管理.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gzl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/dog.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="磊大大的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Linux进程管理之进程的管理</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-09T05:28:09+08:00">
+                2020-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/Centos7/" itemprop="url" rel="index">
+                    <span itemprop="name">Centos7</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Linux进程管理之进程的管理.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="Linux进程管理之进程的管理.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>进程之间是可以相互控制的，你可以关闭、重启服务器软件，服务器本身就是个进程，你既然可以让它关闭或者启动，当然就可以控制进程。</p>
+<p>那我们如果管理进程呢，其实是通过给予进程一个信号(signal)去告诉进程你想要它做什么。</p>
+<a id="more"></a>
+<h2 id="进程的管理方式"><a href="#进程的管理方式" class="headerlink" title="进程的管理方式"></a>进程的管理方式</h2><p>我们一般使用发送信号来管理进程，你可以使用 <code>kill -l</code> 或者 <code>man 7 signal</code>来查询。</p>
+<p>主要信号的代号、名称、内容如下 : </p>
+<style>
+table th:nth-of-type(1){
+width: 8%;
+}
+table th:nth-of-type(2){
+width: 10%
+;
+}
+table th:nth-of-type(3){
+width: 72%;
+}
+</style>  
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left">代号</th>
+<th style="text-align:left">名称</th>
+<th style="text-align:center">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">SIGHUP</td>
+<td style="text-align:center">启动被终止的进程，可让该PID重新读取自己的配置文件，类似重新启动</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">SIGINT</td>
+<td style="text-align:center">相当于用键盘输入(ctrl + c)来终端一个进程的运行</td>
+</tr>
+<tr>
+<td style="text-align:left">9</td>
+<td style="text-align:left">SIGKILL</td>
+<td style="text-align:center">代表强制中断一个进程的执行，如果该进程执行到一半，那么尚未完成的部分可能会有半成品的产生，类似vim会有个.filename.swp保留下来</td>
+</tr>
+<tr>
+<td style="text-align:left">15</td>
+<td style="text-align:left">SIGTERW</td>
+<td style="text-align:center">以正常的方式结束进程来终止该进程，由于是正常的终止，所以后续的操作会将它完成，不过，如果该进程已经发生问题，就是无法使用正常的方法终止时，输入这个信号也是没有用的。</td>
+</tr>
+<tr>
+<td style="text-align:left">19</td>
+<td style="text-align:left">SIGSTOP</td>
+<td style="text-align:center">相当于用键盘输入(ctrl + z)来暂停一个进程的运行</td>
+</tr>
+</tbody>
+</table>
+<p>上面只是常用的信号而已，更多的信号请自行<code>man</code>。一般来说，你只需要记得<code>[1、9、15]</code>即可。  </p>
+<h2 id="发送信号"><a href="#发送信号" class="headerlink" title="发送信号"></a>发送信号</h2><p>我们如何来发送信号呢？就是通过<code>kill</code>或<code>killall</code> </p>
+<h3 id="kill-signal-PID"><a href="#kill-signal-PID" class="headerlink" title="kill -signal PID"></a><code>kill -signal PID</code></h3><p>kill可以帮我们将这个信号传送给某个任务(%jobmunber)或是某个PID。<br>需要注意的是: kill命令后面加上数字与加上%数据是不一样的，因为任务管理中有1号任务，但是PID为1的进程是(systemd)进程，你如果关闭systemd进程，就会造成宕机。</p>
+<h3 id="killall-signal-命令名称"><a href="#killall-signal-命令名称" class="headerlink" title="killall -signal 命令名称"></a><code>killall -signal</code> 命令名称</h3><p>由于<code>kill</code>后面必须要加上<code>PID</code>(或者 job number)，所以，通常<code>kill</code>都会配合配<code>ps</code>、<code>pstree</code>等命令，因为我们必须要找到对应的进程PID。但是，如此一来，很麻烦，有没有可以利用(执行命令的名称)来给予信号呢？<br>那么 <code>killall</code> 登场了。</p>
+<h3 id="killall详解"><a href="#killall详解" class="headerlink" title="killall详解"></a><code>killall</code>详解</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@iZm5eemox1hfck7dpji7yeZ ~]<span class="comment"># killall</span></span><br><span class="line"></span><br><span class="line">  -i : interactive及互动的意思，若需要删除时，会出现提示符给使用者</span><br><span class="line">  -e : exact的意思，表示后面接的(<span class="built_in">command</span> name要一致)，但整个完整的命令不能超过15字符</span><br><span class="line">  -I : 命令名称 (可能含有参数) 忽略大小写</span><br><span class="line">  -Z,--context 正则表达式 仅杀死含有指定上下文的进程 (必须在其他参数前使用)</span><br></pre></td></tr></table></figure>
+<p>总之，我们删除某个进程，可以使用PID或者启动该进程的命令名称，而如果要删除某个服务，那么我们就使用<code>killall</code>，因为它可以将系统当中所有以某个命令名称启动的进程全部删除。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ps/" rel="tag"># ps</a>
+          
+            <a href="/tags/top/" rel="tag"># top</a>
+          
+            <a href="/tags/pstree/" rel="tag"># pstree</a>
+          
+            <a href="/tags/进程管理/" rel="tag"># 进程管理</a>
+          
+            <a href="/tags/查看进程/" rel="tag"># 查看进程</a>
+          
+            <a href="/tags/Centos7/" rel="tag"># Centos7</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Linux进程管理之查看进程.html" rel="next" title="Linux进程管理之查看进程">
+                <i class="fa fa-chevron-left"></i> Linux进程管理之查看进程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript" rel="external nofollow noopener noreferrer" target="_blank">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/img/dog.jpeg" alt="Gzl">
+            
+              <p class="site-author-name" itemprop="name">Gzl</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程的管理方式"><span class="nav-number">2.</span> <span class="nav-text">进程的管理方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发送信号"><span class="nav-number">3.</span> <span class="nav-text">发送信号</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#kill-signal-PID"><span class="nav-number">3.1.</span> <span class="nav-text">kill -signal PID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#killall-signal-命令名称"><span class="nav-number">3.2.</span> <span class="nav-text">killall -signal 命令名称</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#killall详解"><span class="nav-number">3.3.</span> <span class="nav-text">killall详解</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gzl</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="http://hexo.io" rel="external nofollow noopener noreferrer">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow noopener noreferrer">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://disqus_k0AAUxAZIe.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https:blog.guozhenlei.top/Linux进程管理之进程的管理.html';
+          this.page.identifier = 'Linux进程管理之进程的管理.html';
+          this.page.title = 'Linux进程管理之进程的管理';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://disqus_k0AAUxAZIe.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

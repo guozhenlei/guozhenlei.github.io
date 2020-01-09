@@ -4,11 +4,44 @@
 
     
   <url>
-    <loc>https:blog.guozhenlei.top/Linux%E4%B9%8B%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86.html</loc>
-    <lastmod>2020-01-07T14:33:25.916Z</lastmod>
+    <loc>https:blog.guozhenlei.top/Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86%E4%B9%8B%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%AE%A1%E7%90%86.html</loc>
+    <lastmod>2020-01-09T09:42:19.958Z</lastmod>
     <data>
         <display>
-        <title>Linux之进程管理</title>
+        <title>Linux进程管理之进程的管理</title>
+        <pubTime>2020-01-08T21:28:09.000Z</pubTime>
+        
+        <tag>ps</tag>
+         
+        <tag>top</tag>
+         
+        <tag>pstree</tag>
+         
+        <tag>进程管理</tag>
+         
+        <tag>查看进程</tag>
+         
+        <tag>Centos7</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="https:blog.guozhenlei.top/categories/Linux/"/>
+          
+             
+              <breadCrumb title="Centos7" url="https:blog.guozhenlei.top/categories/Linux/Centos7/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https:blog.guozhenlei.top/Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86%E4%B9%8B%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B.html</loc>
+    <lastmod>2020-01-08T13:26:17.630Z</lastmod>
+    <data>
+        <display>
+        <title>Linux进程管理之查看进程</title>
         <pubTime>2019-12-16T20:31:22.000Z</pubTime>
         
         <tag>ps</tag>
@@ -19,10 +52,17 @@
          
         <tag>进程管理</tag>
          
+        <tag>查看进程</tag>
+         
+        <tag>Centos7</tag>
+         
          
            
              
               <breadCrumb title="Linux" url="https:blog.guozhenlei.top/categories/Linux/"/>
+          
+             
+              <breadCrumb title="Centos7" url="https:blog.guozhenlei.top/categories/Linux/Centos7/"/>
           
         </display>
     </data>
