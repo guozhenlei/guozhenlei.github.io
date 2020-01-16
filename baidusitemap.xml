@@ -4,6 +4,37 @@
 
     
   <url>
+    <loc>https:blog.guozhenlei.top/Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86%E4%B9%8B%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F.html</loc>
+    <lastmod>2020-01-16T13:37:41.396Z</lastmod>
+    <data>
+        <display>
+        <title>Linux进程管理之进程的执行顺序</title>
+        <pubTime>2020-01-16T21:04:10.000Z</pubTime>
+        
+        <tag>Centos7</tag>
+         
+        <tag>nice</tag>
+         
+        <tag>renice</tag>
+         
+        <tag>进程管理</tag>
+         
+        <tag>进程执行顺序</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="https:blog.guozhenlei.top/categories/Linux/"/>
+          
+             
+              <breadCrumb title="Centos7" url="https:blog.guozhenlei.top/categories/Linux/Centos7/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https:blog.guozhenlei.top/Linux%E4%B9%8B%E5%8F%AF%E5%94%A4%E9%86%92%E5%81%9C%E6%9C%BA%E6%9C%9F%E9%97%B4%E7%9A%84%E5%B7%A5%E4%BD%9C%E4%BB%BB%E5%8A%A1Anacron.html</loc>
     <lastmod>2020-01-09T09:45:33.829Z</lastmod>
     <data>
@@ -13,9 +44,9 @@
         
         <tag>Linux</tag>
          
-        <tag>Centos7</tag>
-         
         <tag>Anacron</tag>
+         
+        <tag>Centos7</tag>
          
          
            
@@ -40,6 +71,8 @@
         
         <tag>Linux</tag>
          
+        <tag>Centos7</tag>
+         
         <tag>Cron</tag>
          
         <tag>Crond</tag>
@@ -47,8 +80,6 @@
         <tag>Crontab</tag>
          
         <tag>定时任务</tag>
-         
-        <tag>Centos7</tag>
          
          
            
@@ -73,13 +104,13 @@
         
         <tag>Centos7</tag>
          
+        <tag>进程管理</tag>
+         
         <tag>ps</tag>
          
         <tag>top</tag>
          
         <tag>pstree</tag>
-         
-        <tag>进程管理</tag>
          
         <tag>查看进程</tag>
          
@@ -106,13 +137,13 @@
         
         <tag>Centos7</tag>
          
+        <tag>进程管理</tag>
+         
         <tag>ps</tag>
          
         <tag>top</tag>
          
         <tag>pstree</tag>
-         
-        <tag>进程管理</tag>
          
         <tag>查看进程</tag>
          
