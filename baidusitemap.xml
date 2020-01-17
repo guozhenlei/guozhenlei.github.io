@@ -44,9 +44,9 @@
         
         <tag>Linux</tag>
          
-        <tag>Anacron</tag>
-         
         <tag>Centos7</tag>
+         
+        <tag>Anacron</tag>
          
          
            
@@ -71,8 +71,6 @@
         
         <tag>Linux</tag>
          
-        <tag>Centos7</tag>
-         
         <tag>Cron</tag>
          
         <tag>Crond</tag>
@@ -80,6 +78,8 @@
         <tag>Crontab</tag>
          
         <tag>定时任务</tag>
+         
+        <tag>Centos7</tag>
          
          
            
