@@ -5,12 +5,13 @@ Allow: /tags/
 Allow: /archives/
 Allow: /about/
 
-Disallow: /vendors/
-Disallow: /js/
-Disallow: /css/
-Disallow: /fonts/
-Disallow: /vendors/
-Disallow: /fancybox/
+# 不允许访问的目录
+# Disallow: /vendors/ 
+# Disallow: /js/
+# Disallow: /css/
+# Disallow: /fonts/
+# Disallow: /vendors/
+# Disallow: /fancybox/
 
 Sitemap: https://blog.guozhenlei.top/sitemap.xml
 Sitemap: https://blog.guozhenlei.top/baidusitemap.xml
